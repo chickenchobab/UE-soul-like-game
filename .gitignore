@@ -1,0 +1,11 @@
+/.vs
+/.vscode
+/Assets
+/Binaries
+/Content
+/DerivedDataCache
+/Intermediate
+/Saved
+SoulLikeGame.code-workspace
+SoulLikeGame.uproject
+SoulLikeGame.sln
