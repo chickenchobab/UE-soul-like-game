@@ -2,6 +2,8 @@
 
 
 #include "Characters/SoulBaseCharacter.h"
+#include "AbilitySystem/SoulAbilitySystemComponent.h"
+#include "AbilitySystem/SoulAttributeSet.h"
 
 // Sets default values
 ASoulBaseCharacter::ASoulBaseCharacter()
@@ -11,5 +13,25 @@ ASoulBaseCharacter::ASoulBaseCharacter()
 	PrimaryActorTick.bStartWithTickEnabled = false;
 
 	GetMesh()->bReceivesDecals = false;
+
+	SoulAbilitySystemComponent = CreateDefaultSubobject<USoulAbilitySystemComponent>(TEXT("SoulAbilitySystemComponent"));
+
+	SoulAttributeSet = CreateDefaultSubobject<USoulAttributeSet>(TEXT("SoulAttributeSet"));
 }
  
+
+UAbilitySystemComponent* ASoulBaseCharacter::GetAbilitySystemComponent() const
+{
+	return GetSoulAbilitySystemComponent();
+}
+
+
+void ASoulBaseCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	if (SoulAbilitySystemComponent)
+	{
+		SoulAbilitySystemComponent->InitAbilityActorInfo(this, this);
+	}
+}

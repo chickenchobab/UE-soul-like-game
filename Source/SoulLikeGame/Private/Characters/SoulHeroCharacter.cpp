@@ -10,6 +10,7 @@
 #include "DataAssets/Input/DataAsset_InputConfig.h"
 #include "Components/Input/SoulInputComponent.h"
 #include "SoulGameplayTags.h"
+#include "AbilitySystem/SoulAbilitySystemComponent.h"
 
 #include "SoulDebugHelper.h"
 
@@ -58,8 +59,22 @@ void ASoulHeroCharacter::SetupPlayerInputComponent(class UInputComponent* Player
 void ASoulHeroCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+}
 
-  Debug::Print(TEXT("Working"));
+
+void ASoulHeroCharacter::PossessedBy(AController* NewController)
+{
+  Super::PossessedBy(NewController);
+
+  if (SoulAbilitySystemComponent && SoulAttributeSet)
+  {
+    const FString ASCText = FString::Printf(TEXT("Owner Actor: %s, Avatar Actor : %s"), 
+      *SoulAbilitySystemComponent->GetOwnerActor()->GetActorLabel(),
+      *SoulAbilitySystemComponent->GetAvatarActor()->GetActorLabel()
+    );
+    Debug::Print(TEXT("Ability system component valid.") + ASCText, FColor::Green);
+    Debug::Print(TEXT("Attributeset valid.") + ASCText);
+  }
 }
 
 
