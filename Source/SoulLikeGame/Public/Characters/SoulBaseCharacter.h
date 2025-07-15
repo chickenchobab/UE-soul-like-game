@@ -9,6 +9,7 @@
 
 class USoulAbilitySystemComponent;
 class USoulAttributeSet;
+class UDataAsset_StartUpDataBase;
 
 UCLASS()
 class SOULLIKEGAME_API ASoulBaseCharacter : public ACharacter, public IAbilitySystemInterface
@@ -37,4 +38,7 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySystem")
 	USoulAttributeSet* SoulAttributeSet;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CharacterData")
+	TSoftObjectPtr<UDataAsset_StartUpDataBase> CharacterStartUpData;
 };
