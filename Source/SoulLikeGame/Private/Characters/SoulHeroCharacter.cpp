@@ -12,6 +12,7 @@
 #include "SoulGameplayTags.h"
 #include "AbilitySystem/SoulAbilitySystemComponent.h"
 #include "DataAssets/StartUpData/DataAsset_StartUpDataBase.h"
+#include "Components/Combat/HeroCombatComponent.h"
 
 #include "SoulDebugHelper.h"
 
@@ -38,6 +39,8 @@ ASoulHeroCharacter::ASoulHeroCharacter()
   GetCharacterMovement()->RotationRate = FRotator(0.f, 500.f, 0.f);
   GetCharacterMovement()->MaxWalkSpeed = 400.f;
   GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
+
+  HeroCombatComponent = CreateDefaultSubobject<UHeroCombatComponent>(TEXT("HeroCombatComponent"));
 }
 
 

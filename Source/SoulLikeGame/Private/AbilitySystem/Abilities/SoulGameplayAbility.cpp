@@ -3,6 +3,7 @@
 
 #include "AbilitySystem/Abilities/SoulGameplayAbility.h"
 #include "AbilitySystem/SoulAbilitySystemComponent.h"
+#include "Components/Combat/PawnCombatComponent.h"
 
 void USoulGameplayAbility::OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec)
 {
@@ -28,4 +29,11 @@ void USoulGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle Handle, c
       ActorInfo->AbilitySystemComponent->ClearAbility(Handle);
     }
   }
+}
+
+
+UPawnCombatComponent* USoulGameplayAbility::GetPawnCombatComponentFromActorInfo() const
+{
+  // What if the avatar have multiple UPawnCombatComponent?
+  return GetAvatarActorFromActorInfo()->FindComponentByClass<UPawnCombatComponent>();
 }

@@ -6,7 +6,10 @@
 
 namespace SoulGameplayTags
 {
-	/** input tags */
+	/** Input tags */
 	SOULLIKEGAME_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Move)
 	SOULLIKEGAME_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Look)
+
+	/** Player tags */
+	SOULLIKEGAME_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Weapon_Axe)
 }
