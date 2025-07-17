@@ -47,6 +47,7 @@ ASoulHeroCharacter::ASoulHeroCharacter()
 void ASoulHeroCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
   checkf(InputConfigDataAsset, TEXT("Forgot to assign a valid data asset as input config"));
+  
   ULocalPlayer* LocalPlayer = GetController<APlayerController>()->GetLocalPlayer();
   UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LocalPlayer);
 
@@ -57,6 +58,8 @@ void ASoulHeroCharacter::SetupPlayerInputComponent(class UInputComponent* Player
   
   SoulInputComponent->BindNativeInputAction(InputConfigDataAsset, SoulGameplayTags::InputTag_Move, ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
   SoulInputComponent->BindNativeInputAction(InputConfigDataAsset, SoulGameplayTags::InputTag_Look, ETriggerEvent::Triggered, this, &ThisClass::Input_Look);
+
+  SoulInputComponent->BindAbilityInputAction(InputConfigDataAsset, this, &ThisClass::Input_AbilityInputPressed, &ThisClass::Input_AbilityInputReleased);
 }
 
 
@@ -101,3 +104,12 @@ void ASoulHeroCharacter::Input_Look(const FInputActionValue& InputActionValue)
   AddControllerPitchInput(LookAxisVector.Y);
 }
 
+void ASoulHeroCharacter::Input_AbilityInputPressed(FGameplayTag InInputTag)
+{
+	SoulAbilitySystemComponent->OnAbilityInputPressed(InInputTag);
+}
+
+void ASoulHeroCharacter::Input_AbilityInputReleased(FGameplayTag InInputTag)
+{
+	SoulAbilitySystemComponent->OnAbilityInputReleased(InInputTag);
+}

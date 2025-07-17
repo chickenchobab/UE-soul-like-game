@@ -21,6 +21,11 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UInputAction* InputAction;
+
+	bool IsValid() const
+	{
+		return	InputTag.IsValid() && InputAction;
+	}
 };
 
 /**
@@ -32,11 +37,14 @@ class SOULLIKEGAME_API UDataAsset_InputConfig : public UDataAsset
 	GENERATED_BODY()
 
 public:
+	UInputAction* FindNativeInputActionByTag(const FGameplayTag& InInputTag) const;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UInputMappingContext* DefaultMappingContext;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (TitleProperty = "InputTag"))
 	TArray<FSoulInputActionConfig> NativeInputActions;
 
-	UInputAction* FindNativeInputActionByTag(const FGameplayTag& InInputTag) const;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (TitleProperty = "InputTag"))
+	TArray<FSoulInputActionConfig> AbilityInputActions;
 };

@@ -34,6 +34,13 @@ void USoulGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle Handle, c
 
 UPawnCombatComponent* USoulGameplayAbility::GetPawnCombatComponentFromActorInfo() const
 {
-  // What if the avatar have multiple UPawnCombatComponent?
+  // What if the avatar have multiple UPawnCombatComponent
   return GetAvatarActorFromActorInfo()->FindComponentByClass<UPawnCombatComponent>();
 }
+
+
+USoulAbilitySystemComponent* USoulGameplayAbility::GetSoulAbilityComponentFromActorInfo() const
+{
+  return Cast<USoulAbilitySystemComponent>(CurrentActorInfo->AbilitySystemComponent);
+}
+

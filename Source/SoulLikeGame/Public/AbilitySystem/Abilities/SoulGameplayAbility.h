@@ -7,6 +7,7 @@
 #include "SoulGameplayAbility.generated.h"
 
 class UPawnCombatComponent;
+class USoulAbilitySystemComponent;
 
 UENUM(BlueprintType)
 enum class ESoulAbilityActivationPolicy : uint8
@@ -29,9 +30,12 @@ protected:
 	virtual void OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) override;
 	virtual void EndAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bWasCancelled) override;
 	//~ End UGameplayAbility Interface
-
+	
 	UFUNCTION(BlueprintPure, Category = "SoulAbility")
 	UPawnCombatComponent* GetPawnCombatComponentFromActorInfo() const;
+
+	UFUNCTION(BlueprintPure, Category = "SoulAbility")
+	USoulAbilitySystemComponent* GetSoulAbilityComponentFromActorInfo() const;
 
 	UPROPERTY(EditDefaultsOnly, Category = "SoulAbility")
 	ESoulAbilityActivationPolicy AbilityActivationPolicy = ESoulAbilityActivationPolicy::OnTriggered;
