@@ -21,7 +21,7 @@ public:
 	void RegisterSpawnedWeapon(FGameplayTag InWeaponTag, ASoulWeaponBase* InWeapon, bool bRegisterAsEquippedWeapon = false);
 
 	UFUNCTION(BlueprintCallable, Category = "Combat")
-	ASoulWeaponBase* GetCharaterCarriedWeaponByTag(FGameplayTag InWeaponTag) const;
+	ASoulWeaponBase* GetCharacterCarriedWeaponByTag(FGameplayTag InWeaponTag) const;
 
 	UFUNCTION(BlueprintCallable, Category = "Combat")
 	ASoulWeaponBase* GetCharacterCurrentEquippedWeapon() const;

@@ -14,4 +14,7 @@ namespace SoulGameplayTags
 
 	/** Player tags */
 	SOULLIKEGAME_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Weapon_Axe)
+
+	SOULLIKEGAME_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_Equip_Axe)
+	SOULLIKEGAME_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_Unequip_Axe)
 }

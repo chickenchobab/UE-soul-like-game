@@ -25,7 +25,7 @@ void UPawnCombatComponent::RegisterSpawnedWeapon(FGameplayTag InWeaponTag, ASoul
   Debug::Print(WeaponString);
 }
 
-ASoulWeaponBase* UPawnCombatComponent::GetCharaterCarriedWeaponByTag(FGameplayTag InWeaponTag) const
+ASoulWeaponBase* UPawnCombatComponent::GetCharacterCarriedWeaponByTag(FGameplayTag InWeaponTag) const
 {
 	if (CharacterCarriedWeaponMap.Contains(InWeaponTag))
   {
@@ -41,5 +41,5 @@ ASoulWeaponBase* UPawnCombatComponent::GetCharaterCarriedWeaponByTag(FGameplayTa
 ASoulWeaponBase* UPawnCombatComponent::GetCharacterCurrentEquippedWeapon() const
 {
 	if (!CurrentEquippedWeaponTag.IsValid()) return nullptr;
-  return GetCharaterCarriedWeaponByTag(CurrentEquippedWeaponTag);
+  return GetCharacterCarriedWeaponByTag(CurrentEquippedWeaponTag);
 }

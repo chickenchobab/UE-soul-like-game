@@ -6,6 +6,8 @@
 #include "Components/Combat/PawnCombatComponent.h"
 #include "HeroCombatComponent.generated.h"
 
+class ASoulHeroWeapon;
+
 /**
  * 
  */
@@ -14,4 +16,7 @@ class SOULLIKEGAME_API UHeroCombatComponent : public UPawnCombatComponent
 {
 	GENERATED_BODY()
 	
+public:
+	UFUNCTION(BlueprintPure, Category = "Combat")
+	ASoulHeroWeapon* GetHeroCarriedWeaponByTag(FGameplayTag InWeaponTag);
 };

@@ -6,6 +6,8 @@
 #include "AnimInstances/SoulBaseAnimInstance.h"
 #include "SoulHeroLinkedAnimLayer.generated.h"
 
+class USoulHeroAnimInstance;
+
 /**
  * 
  */
@@ -14,4 +16,7 @@ class SOULLIKEGAME_API USoulHeroLinkedAnimLayer : public USoulBaseAnimInstance
 {
 	GENERATED_BODY()
 	
+public:
+	UFUNCTION(BlueprintPure, meta = (BlueprintThreadSafe))
+	USoulHeroAnimInstance* GetHeroAnimInstance() const;
 };
