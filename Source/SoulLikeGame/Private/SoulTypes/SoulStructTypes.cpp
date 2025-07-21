@@ -2,4 +2,9 @@
 
 
 #include "SoulTypes/SoulStructTypes.h"
+#include "AbilitySystem/Abilities/SoulGameplayAbility.h"
 
+bool FSoulHeroAbilitySet::IsValid() const
+{
+  return InputTag.IsValid() && AbilityToGrant;
+}

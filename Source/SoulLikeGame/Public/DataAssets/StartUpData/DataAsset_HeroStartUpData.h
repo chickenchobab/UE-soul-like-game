@@ -4,24 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "DataAssets/StartUpData/DataAsset_StartUpDataBase.h"
-#include "GameplayTagContainer.h"
+#include "SoulTypes/SoulStructTypes.h"
 #include "DataAsset_HeroStartUpData.generated.h"
-
-class USoulGameplayAbility;
-
-USTRUCT(BlueprintType)
-struct FSoulHeroAbilitySet
-{
-	GENERATED_BODY()
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (Categories = "InputTag"))
-	FGameplayTag InputTag;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TSubclassOf<USoulGameplayAbility> AbilityToGrant; // cannot be instance
-
-	bool IsValid() const;
-};
 
 /**
  * 

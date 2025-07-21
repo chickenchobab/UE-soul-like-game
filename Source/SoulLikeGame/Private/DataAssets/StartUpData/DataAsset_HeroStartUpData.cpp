@@ -5,11 +5,6 @@
 #include "AbilitySystem/Abilities/SoulGameplayAbility.h"
 #include "AbilitySystem/SoulAbilitySystemComponent.h"
 
-bool FSoulHeroAbilitySet::IsValid() const
-{
-  return InputTag.IsValid() && AbilityToGrant;
-}
-
 
 void UDataAsset_HeroStartUpData::GiveToAbilitySystemComponent(USoulAbilitySystemComponent* InASCToGive, int32 ApplyLevel)
 {
