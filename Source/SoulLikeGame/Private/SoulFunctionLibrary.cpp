@@ -22,7 +22,7 @@ void USoulFunctionLibrary::AddGameplayTagToActorIfNone(AActor* InActor, FGamepla
   }
 }
 
-void USoulFunctionLibrary::RemoveGameplayFromActorIfFound(AActor* InActor, FGameplayTag TagToRemove)
+void USoulFunctionLibrary::RemoveGameplayTagFromActorIfFound(AActor* InActor, FGameplayTag TagToRemove)
 {
 	USoulAbilitySystemComponent* ASC = NativeGetSoulASCFromActor(InActor);
 
