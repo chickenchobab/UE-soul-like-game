@@ -10,5 +10,5 @@ void ASoulHeroWeapon::AssignGrantedAbilitySpecHandles(const TArray<FGameplayAbil
 
 TArray<FGameplayAbilitySpecHandle> ASoulHeroWeapon::GetGrantedAbilitySpecHandles() const
 {
-	return GrantedAbilitySpecHandles;;
+	return GrantedAbilitySpecHandles;
 }
