@@ -18,7 +18,7 @@ struct FSoulHeroAbilitySet
 	FGameplayTag InputTag;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TSubclassOf<USoulGameplayAbility> AbilityToGrant; // cannot be instance
+	TSubclassOf<USoulGameplayAbility> AbilityToGrant; // need to be hero version
 
 	bool IsValid() const;
 };
