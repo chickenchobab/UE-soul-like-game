@@ -19,6 +19,10 @@ class SOULLIKEGAME_API ASoulEnemyCharacter : public ASoulBaseCharacter
 public:
 	ASoulEnemyCharacter();
 
+	//~ Begin IPawnCombatInterface Interface
+	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
+	//~ End IPawnCombatInterface Interface
+
 	FORCEINLINE UEnemyCombatComponent* GetEnemyCombatComponent() const { return EnemyCombatComponent; }
 
 protected:

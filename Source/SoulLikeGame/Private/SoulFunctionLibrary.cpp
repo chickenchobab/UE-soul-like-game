@@ -4,6 +4,7 @@
 #include "SoulFunctionLibrary.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystem/SoulAbilitySystemComponent.h"
+#include "Interfaces/PawnCombatInterface.h"
 
 USoulAbilitySystemComponent* USoulFunctionLibrary::NativeGetSoulASCFromActor(AActor* InActor)
 {
@@ -43,4 +44,25 @@ bool USoulFunctionLibrary::NativeDoesActorHaveTag(AActor* InActor, FGameplayTag 
 void USoulFunctionLibrary::BP_DoesActorHaveTag(AActor* InActor, FGameplayTag TagToCheck, ESoulConfirmType& OutConfirmType)
 {
   OutConfirmType = NativeDoesActorHaveTag(InActor, TagToCheck) ? ESoulConfirmType::Yes : ESoulConfirmType::No;
+}
+
+UPawnCombatComponent* USoulFunctionLibrary::NativeGetPawnCombatComponentFromActor(AActor* InActor)
+{
+	check(InActor);
+
+	if (IPawnCombatInterface* PawnCombatInterface = Cast<IPawnCombatInterface>(InActor))
+	{
+		return PawnCombatInterface->GetPawnCombatComponent();
+	}
+	return nullptr;
+}
+
+
+UPawnCombatComponent* USoulFunctionLibrary::BP_GetCombatComponentFromActor(AActor* InActor, ESoulValidType& OutValidType)
+{
+  UPawnCombatComponent* CombatComponent = NativeGetPawnCombatComponentFromActor(InActor);
+  
+  OutValidType = CombatComponent ? ESoulValidType::Valid : ESoulValidType::InValid;
+  
+  return CombatComponent;
 }

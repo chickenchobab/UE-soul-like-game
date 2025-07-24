@@ -27,6 +27,12 @@ ASoulEnemyCharacter::ASoulEnemyCharacter()
 }
 
 
+UPawnCombatComponent* ASoulEnemyCharacter::GetPawnCombatComponent() const 
+{
+  return EnemyCombatComponent;
+}
+
+
 void ASoulEnemyCharacter::PossessedBy(AController* NewController)
 {
   Super::PossessedBy(NewController);

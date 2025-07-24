@@ -44,6 +44,12 @@ ASoulHeroCharacter::ASoulHeroCharacter()
 }
 
 
+UPawnCombatComponent* ASoulHeroCharacter::GetPawnCombatComponent() const 
+{
+  return HeroCombatComponent;
+}
+
+
 void ASoulHeroCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
   checkf(InputConfigDataAsset, TEXT("Forgot to assign a valid data asset as input config"));

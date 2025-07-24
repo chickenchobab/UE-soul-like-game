@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
+#include "Interfaces/PawnCombatInterface.h"
 #include "SoulBaseCharacter.generated.h"
 
 class USoulAbilitySystemComponent;
@@ -12,7 +13,7 @@ class USoulAttributeSet;
 class UDataAsset_StartUpDataBase;
 
 UCLASS()
-class SOULLIKEGAME_API ASoulBaseCharacter : public ACharacter, public IAbilitySystemInterface
+class SOULLIKEGAME_API ASoulBaseCharacter : public ACharacter, public IAbilitySystemInterface, public IPawnCombatInterface
 {
 	GENERATED_BODY()
 
@@ -24,9 +25,13 @@ public:
 	
 	FORCEINLINE USoulAttributeSet* GetSoulAttributeSet() const {return SoulAttributeSet;}
 
-	//~ Begin UAbilitySystemInterface Interface
-	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
-	//~ End UAbilitySystemInterface Interface
+	//~ Begin IAbilitySystemInterface Interface
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	//~ End IAbilitySystemInterface Interface
+
+	//~ Begin IPawnCombatInterface Interface
+	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
+	//~ End IPawnCombatInterface Interface
 
 protected:
 	//~ Begin APawn Interface
