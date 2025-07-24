@@ -8,6 +8,7 @@
 
 class USoulGameplayAbility;
 class USoulAbilitySystemComponent;
+class UGameplayEffect;
 
 /**
  * 
@@ -28,4 +29,7 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "StartUpData")
 	TArray<TSubclassOf<USoulGameplayAbility>> ReactiveAbilities;
+
+	UPROPERTY(EditDefaultsOnly, Category = "StartUpData")
+	TArray< TSubclassOf < UGameplayEffect > > StartUpGameplayEffects;
 };

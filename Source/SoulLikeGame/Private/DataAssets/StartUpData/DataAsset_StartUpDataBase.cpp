@@ -12,6 +12,19 @@ void UDataAsset_StartUpDataBase::GiveToAbilitySystemComponent(USoulAbilitySystem
 
   GrantAbilities(ActivateOnGivenAbilities, InASCToGive, ApplyLevel);
   GrantAbilities(ReactiveAbilities, InASCToGive, ApplyLevel);
+
+  for (const TSubclassOf< UGameplayEffect >& EffectClass : StartUpGameplayEffects)
+  {
+    if (!EffectClass) continue;
+    
+    UGameplayEffect* EffectCDO = EffectClass->GetDefaultObject<UGameplayEffect>();
+
+    InASCToGive->ApplyGameplayEffectToSelf(
+      EffectCDO,
+      ApplyLevel,
+      InASCToGive->MakeEffectContext()
+    );
+  }
 }
 
 
