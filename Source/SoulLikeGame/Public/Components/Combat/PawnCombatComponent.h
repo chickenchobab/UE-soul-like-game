@@ -8,6 +8,14 @@
 #include "PawnCombatComponent.generated.h"
 
 class ASoulWeaponBase;
+
+UENUM(BlueprintType)
+enum class EToggleDamageType : uint8
+{
+	CurrentEquippedWeapon,
+	LeftHand,
+	RightHand
+};
 /**
  * 
  */
@@ -25,9 +33,13 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Combat")
 	ASoulWeaponBase* GetCharacterCurrentEquippedWeapon() const;
+	
+	UFUNCTION(BlueprintCallable, Category = "Combat")
+	void ToggleWeaponCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType = EToggleDamageType::CurrentEquippedWeapon);
 
 	UPROPERTY(BlueprintReadWrite, Category = "Combat")
 	FGameplayTag CurrentEquippedWeaponTag;
+
 
 private:	
 	TMap<FGameplayTag, ASoulWeaponBase*> CharacterCarriedWeaponMap;

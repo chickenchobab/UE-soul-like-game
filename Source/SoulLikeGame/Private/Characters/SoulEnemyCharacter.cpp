@@ -53,8 +53,6 @@ void ASoulEnemyCharacter::InitEnemyStartUpData()
         if (UDataAsset_StartUpDataBase* LoadedData = CharacterStartUpData.Get())
         {
           LoadedData->GiveToAbilitySystemComponent(SoulAbilitySystemComponent);
-
-          Debug::Print(TEXT("Enemy start up data loaded"), FColor::Green);
         }
       }
     )
