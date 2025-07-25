@@ -3,6 +3,8 @@
 
 #include "Components/Combat/HeroCombatComponent.h"
 #include "Items/Weapons/SoulHeroWeapon.h"
+#include "AbilitySystemBlueprintLibrary.h"
+#include "SoulGameplayTags.h"
 
 #include "SoulDebugHelper.h"
 
@@ -16,9 +18,19 @@ void UHeroCombatComponent::OnWeaponHitTargetActor(AActor* HitActor)
 	if (OverlappedActors.Contains(HitActor)) return;
 
   OverlappedActors.AddUnique(HitActor);
+
+  FGameplayEventData Data;
+  Data.Instigator = GetOwningPawn();
+  Data.Target = HitActor;
+
+  UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+    GetOwningPawn(),
+    SoulGameplayTags::Shared_Event_MeleeHit,
+    Data
+  );
 }
 
 void UHeroCombatComponent::OnWeaponDetachFromTargetActor(AActor* HitActor)
 {
-	Debug::Print(GetOwningPawn()->GetActorNameOrLabel() + TEXT(" 's weapon pulled from ") + HitActor->GetActorNameOrLabel(), FColor::Red);
+	// Debug::Print(GetOwningPawn()->GetActorNameOrLabel() + TEXT(" 's weapon pulled from ") + HitActor->GetActorNameOrLabel(), FColor::Red);
 }
