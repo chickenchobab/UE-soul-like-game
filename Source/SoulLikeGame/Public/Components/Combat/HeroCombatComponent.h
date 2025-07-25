@@ -19,4 +19,7 @@ class SOULLIKEGAME_API UHeroCombatComponent : public UPawnCombatComponent
 public:
 	UFUNCTION(BlueprintPure, Category = "Combat")
 	ASoulHeroWeapon* GetHeroCarriedWeaponByTag(FGameplayTag InWeaponTag);
+
+	virtual void OnWeaponHitTargetActor(AActor* HitActor) override;
+	virtual void OnWeaponDetachFromTargetActor(AActor* HitActor) override;
 };

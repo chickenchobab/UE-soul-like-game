@@ -8,6 +8,8 @@
 
 class UBoxComponent;
 
+DECLARE_DELEGATE_OneParam(FOnTargetInteractedDelegate, AActor*)
+
 UCLASS()
 class SOULLIKEGAME_API ASoulWeaponBase : public AActor
 {
@@ -19,10 +21,20 @@ public:
 
 	FORCEINLINE UBoxComponent* GetWeaponCollisionBox() const { return WeaponCollisionBox; }
 
+	FOnTargetInteractedDelegate OnWeaponHitTarget;
+	FOnTargetInteractedDelegate OnWeaponDetachFromTarget;
+
 protected:
+	UFUNCTION()
+	virtual void OnCollisionBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult);
+
+	UFUNCTION()
+	virtual void OnCollisionBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapons")
 	UStaticMeshComponent* WeaponMesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapons")
 	UBoxComponent* WeaponCollisionBox;
 };
+
