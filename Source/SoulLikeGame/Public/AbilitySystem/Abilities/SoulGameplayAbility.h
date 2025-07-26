@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/GameplayAbility.h"
+#include "SoulTypes/SoulEnumTypes.h"
 #include "SoulGameplayAbility.generated.h"
 
 class UPawnCombatComponent;
@@ -37,6 +38,11 @@ protected:
 	UFUNCTION(BlueprintPure, Category = "SoulAbility")
 	USoulAbilitySystemComponent* GetSoulAbilityComponentFromActorInfo() const;
 
+	FActiveGameplayEffectHandle NativeApplyEffectSpecHandleToTarget(AActor* TargetActor, const FGameplayEffectSpecHandle& InSpecHandle);
+
+	UFUNCTION(BlueprintCallable, Category = "SoulAbility", meta = (DisplayName = "Apply Gameplay Effect Spec Handle To Target Actor", ExpandEnumAsExecs = "OutSuccessType"))
+	FActiveGameplayEffectHandle BP_ApplyEffectSpecHandleToTarget(AActor* TargetActor, const FGameplayEffectSpecHandle& InSpecHandle, ESoulSuccessType& OutSuccessType);
+	
 	UPROPERTY(EditDefaultsOnly, Category = "SoulAbility")
 	ESoulAbilityActivationPolicy AbilityActivationPolicy = ESoulAbilityActivationPolicy::OnTriggered;
 };

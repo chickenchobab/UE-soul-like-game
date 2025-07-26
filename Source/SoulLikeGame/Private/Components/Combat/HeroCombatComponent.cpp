@@ -13,6 +13,16 @@ ASoulHeroWeapon* UHeroCombatComponent::GetHeroCarriedWeaponByTag(FGameplayTag In
   return Cast<ASoulHeroWeapon>(GetCharacterCarriedWeaponByTag(InWeaponTag));
 }
 
+ASoulHeroWeapon* UHeroCombatComponent::GetHeroCurrentEquippedWeapon() const
+{
+	return Cast<ASoulHeroWeapon>(GetCharacterCurrentEquippedWeapon());
+}
+
+float UHeroCombatComponent::GetHeroCurrentEquippedWeaponDamageAtLevel(float InLevel) const
+{
+	return GetHeroCurrentEquippedWeapon()->HeroWeaponData.WeaponBaseDamage.GetValueAtLevel(InLevel);
+}
+
 void UHeroCombatComponent::OnWeaponHitTargetActor(AActor* HitActor)
 {
 	if (OverlappedActors.Contains(HitActor)) return;

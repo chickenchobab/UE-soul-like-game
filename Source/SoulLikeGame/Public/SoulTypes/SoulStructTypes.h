@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GameplayTagContainer.h"
+#include "ScalableFloat.h"
 #include "SoulStructTypes.generated.h"
 
 class USoulHeroLinkedAnimLayer;
@@ -36,4 +37,7 @@ struct FSoulHeroWeaponData
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (TitleProperty = "InputTag"))
 	TArray<FSoulHeroAbilitySet> DefaultWeaponAbilities;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FScalableFloat WeaponBaseDamage;
 };
