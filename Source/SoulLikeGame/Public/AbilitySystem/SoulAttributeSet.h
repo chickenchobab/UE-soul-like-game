@@ -32,13 +32,13 @@ public:
 	FGameplayAttributeData MaxHealth;
 	ATTRIBUTE_ACCESSORS(USoulAttributeSet, MaxHealth)
 
-	UPROPERTY(BlueprintReadOnly, Category = "Range")
-	FGameplayAttributeData CurrentRange;
-	ATTRIBUTE_ACCESSORS(USoulAttributeSet, CurrentRange)
+	UPROPERTY(BlueprintReadOnly, Category = "Rage")
+	FGameplayAttributeData CurrentRage;
+	ATTRIBUTE_ACCESSORS(USoulAttributeSet, CurrentRage)
 
-	UPROPERTY(BlueprintReadOnly, Category = "Range")
-	FGameplayAttributeData MaxRange;
-	ATTRIBUTE_ACCESSORS(USoulAttributeSet, MaxRange)
+	UPROPERTY(BlueprintReadOnly, Category = "Rage")
+	FGameplayAttributeData MaxRage;
+	ATTRIBUTE_ACCESSORS(USoulAttributeSet, MaxRage)
 
 	UPROPERTY(BlueprintReadOnly, Category = "Damage")
 	FGameplayAttributeData AttackPower;
