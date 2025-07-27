@@ -38,9 +38,19 @@ void UHeroCombatComponent::OnWeaponHitTargetActor(AActor* HitActor)
     SoulGameplayTags::Shared_Event_MeleeHit,
     Data
   );
+
+  UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+    GetOwningPawn(),
+    SoulGameplayTags::Player_Event_HitPause,
+    FGameplayEventData()
+  );
 }
 
 void UHeroCombatComponent::OnWeaponDetachFromTargetActor(AActor* HitActor)
 {
-	// Debug::Print(GetOwningPawn()->GetActorNameOrLabel() + TEXT(" 's weapon pulled from ") + HitActor->GetActorNameOrLabel(), FColor::Red);
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+    GetOwningPawn(),
+    SoulGameplayTags::Player_Event_HitPause,
+    FGameplayEventData()
+  );
 }
