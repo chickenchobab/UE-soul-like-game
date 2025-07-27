@@ -24,6 +24,8 @@ class SOULLIKEGAME_API USoulAttributeSet : public UAttributeSet
 public:
 	USoulAttributeSet();
 
+	virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData &Data) override;
+
 	UPROPERTY(BlueprintReadOnly, Category = "Health")
 	FGameplayAttributeData CurrentHealth;
 	ATTRIBUTE_ACCESSORS(USoulAttributeSet, CurrentHealth)
@@ -48,7 +50,6 @@ public:
 	FGameplayAttributeData DefensePower;
 	ATTRIBUTE_ACCESSORS(USoulAttributeSet, DefensePower)
 
-	// place holder??
 	UPROPERTY(BlueprintReadOnly, Category = "Damage")
 	FGameplayAttributeData DamageTaken;
 	ATTRIBUTE_ACCESSORS(USoulAttributeSet, DamageTaken)
