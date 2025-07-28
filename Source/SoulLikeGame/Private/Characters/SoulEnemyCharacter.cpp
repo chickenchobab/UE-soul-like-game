@@ -6,6 +6,7 @@
 #include "Components/Combat/EnemyCombatComponent.h"
 #include "Engine/AssetManager.h"
 #include "DataAssets/StartUpData/DataAsset_EnemyStartUpData.h"
+#include "Components/UI/EnemyUIComponent.h"
 
 #include "SoulDebugHelper.h"
 
@@ -24,12 +25,20 @@ ASoulEnemyCharacter::ASoulEnemyCharacter()
   GetCharacterMovement()->BrakingDecelerationWalking = 1000.f;
 
   EnemyCombatComponent = CreateDefaultSubobject<UEnemyCombatComponent>(TEXT("EnemyCombatComponent"));
+
+  EnemyUIComponent = CreateDefaultSubobject<UEnemyUIComponent>(TEXT("EnemyUIComponent"));
 }
 
 
 UPawnCombatComponent* ASoulEnemyCharacter::GetPawnCombatComponent() const 
 {
   return EnemyCombatComponent;
+}
+
+
+UPawnUIComponent* ASoulEnemyCharacter::GetPawnUIComponent() const 
+{
+  return EnemyUIComponent;
 }
 
 

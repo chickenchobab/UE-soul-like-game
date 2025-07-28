@@ -13,6 +13,7 @@
 #include "AbilitySystem/SoulAbilitySystemComponent.h"
 #include "DataAssets/StartUpData/DataAsset_StartUpDataBase.h"
 #include "Components/Combat/HeroCombatComponent.h"
+#include "Components/UI/HeroUIComponent.h"
 
 #include "SoulDebugHelper.h"
 
@@ -41,12 +42,20 @@ ASoulHeroCharacter::ASoulHeroCharacter()
   GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 
   HeroCombatComponent = CreateDefaultSubobject<UHeroCombatComponent>(TEXT("HeroCombatComponent"));
+
+  HeroUIComponent = CreateDefaultSubobject<UHeroUIComponent>(TEXT("HeroUIComponent"));
 }
 
 
 UPawnCombatComponent* ASoulHeroCharacter::GetPawnCombatComponent() const 
 {
   return HeroCombatComponent;
+}
+
+
+UPawnUIComponent* ASoulHeroCharacter::GetPawnUIComponent() const 
+{
+  return HeroUIComponent;
 }
 
 
