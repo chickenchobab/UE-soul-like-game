@@ -3,6 +3,8 @@
 
 #include "AbilitySystem/SoulAttributeSet.h"
 #include "GameplayEffectExtension.h"
+#include "SoulFunctionLibrary.h"
+#include "SoulGameplayTags.h"
 
 #include "SoulDebugHelper.h"
 
@@ -52,7 +54,7 @@ void USoulAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectMo
 
     if (NewHealth == 0.f)
     {
-      // TODO : Handle death
+      USoulFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(), SoulGameplayTags::Shared_Status_Dead);
     }
   }
 }

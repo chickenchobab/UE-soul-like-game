@@ -29,21 +29,6 @@ static const FSoulDamageCapture& GetSoulDamageCapture()
 
 UGEExecCalc_DamageTaken::UGEExecCalc_DamageTaken()
 {
-  // Slow way of capturing
-
-  // FProperty* AttackPowerProperty = FindFieldChecked<FProperty>(
-  //   USoulAttributeSet::StaticClass(),
-  //   GET_MEMBER_NAME_CHECKED(USoulAttributeSet, AttackPower)
-  // );
-
-  // FGameplayEffectAttributeCaptureDefinition AttackPowerCaptureDefinition(
-  //   AttackPowerProperty,
-  //   EGameplayEffectAttributeCaptureSource::Source,
-  //   false /* capture the attribute when the spec is applied (not created)*/
-  // );
-
-  // RelevantAttributesToCapture.Add(AttackPowerCaptureDefinition);
-
   RelevantAttributesToCapture.Add(GetSoulDamageCapture().AttackPowerDef);
   RelevantAttributesToCapture.Add(GetSoulDamageCapture().DefensePowerDef);
   RelevantAttributesToCapture.Add(GetSoulDamageCapture().DamageTakenDef);
