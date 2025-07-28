@@ -32,7 +32,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "FunctionLibrary", meta = (DisplayName = "Does Actor Have Tag", ExpandEnumAsExecs = "OutConfirmType"))
 	static void BP_DoesActorHaveTag(AActor* InActor, FGameplayTag TagToCheck, ESoulConfirmType& OutConfirmType);
 
-	static UPawnCombatComponent* NativeGetPawnCombatComponentFromActor(AActor* InActor);
+	static UPawnCombatComponent* NativeGetCombatComponentFromActor(AActor* InActor);
 
 	UFUNCTION(BlueprintCallable, Category = "FunctionLibrary", meta = (DisplayName = "Get Pawn Combat Component From Actor", ExpandEnumAsExecs = "OutValidType"))
 	static UPawnCombatComponent* BP_GetCombatComponentFromActor(AActor* InActor, ESoulValidType& OutValidType);

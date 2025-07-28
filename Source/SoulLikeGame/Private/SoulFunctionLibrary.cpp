@@ -46,7 +46,7 @@ void USoulFunctionLibrary::BP_DoesActorHaveTag(AActor* InActor, FGameplayTag Tag
   OutConfirmType = NativeDoesActorHaveTag(InActor, TagToCheck) ? ESoulConfirmType::Yes : ESoulConfirmType::No;
 }
 
-UPawnCombatComponent* USoulFunctionLibrary::NativeGetPawnCombatComponentFromActor(AActor* InActor)
+UPawnCombatComponent* USoulFunctionLibrary::NativeGetCombatComponentFromActor(AActor* InActor)
 {
 	check(InActor);
 
@@ -60,7 +60,7 @@ UPawnCombatComponent* USoulFunctionLibrary::NativeGetPawnCombatComponentFromActo
 
 UPawnCombatComponent* USoulFunctionLibrary::BP_GetCombatComponentFromActor(AActor* InActor, ESoulValidType& OutValidType)
 {
-  UPawnCombatComponent* CombatComponent = NativeGetPawnCombatComponentFromActor(InActor);
+  UPawnCombatComponent* CombatComponent = NativeGetCombatComponentFromActor(InActor);
   
   OutValidType = CombatComponent ? ESoulValidType::Valid : ESoulValidType::InValid;
   
