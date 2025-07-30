@@ -6,6 +6,8 @@
 #include "Components/UI/HeroUIComponent.h"
 #include "Components/UI/EnemyUIComponent.h"
 
+#include "SoulDebugHelper.h"
+
 void USoulWidgetBase::NativeOnInitialized()
 {
   Super::NativeOnInitialized();
@@ -16,7 +18,14 @@ void USoulWidgetBase::NativeOnInitialized()
     {
       BP_OnOwningHeroUIComponentInitialized(HeroUIComponent);
     }
-    else if (UEnemyUIComponent* EnemyUIComponent = Cast<UEnemyUIComponent>(PawnUIInterface->GetPawnUIComponent()))
+  }
+}
+
+void USoulWidgetBase::InitializeEnemyCreatedWidget(AActor* OwningEnemyActor)
+{
+  if (IPawnUIInterface* PawnUIInterface = Cast<IPawnUIInterface>(OwningEnemyActor))
+  {
+    if (UEnemyUIComponent* EnemyUIComponent = Cast<UEnemyUIComponent>(PawnUIInterface->GetPawnUIComponent()))
     {
       BP_OnOwningEnemyUIComponentInitialized(EnemyUIComponent);
     }

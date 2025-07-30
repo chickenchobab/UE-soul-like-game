@@ -16,7 +16,7 @@ UCLASS()
 class SOULLIKEGAME_API USoulWidgetBase : public UUserWidget
 {
 	GENERATED_BODY()
-	
+
 protected:
 	virtual void NativeOnInitialized() override;
 
@@ -25,4 +25,7 @@ protected:
 	void BP_OnOwningHeroUIComponentInitialized(UHeroUIComponent* OwningHeroUIComponent);
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "On Owning Enemy UI Component Initialized"))
 	void BP_OnOwningEnemyUIComponentInitialized(UEnemyUIComponent* OwningEnemyUIComponent);
+
+public:
+	void InitializeEnemyCreatedWidget(AActor* OwningEnemyActor);
 };
