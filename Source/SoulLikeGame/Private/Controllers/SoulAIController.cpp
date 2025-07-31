@@ -23,9 +23,27 @@ ASoulAIController::ASoulAIController(const FObjectInitializer& ObjectInitializer
   EnemyPerceptionComponent->ConfigureSense(*AISenseConfig_Sight);
   EnemyPerceptionComponent->SetDominantSense(UAISenseConfig_Sight::StaticClass());
   EnemyPerceptionComponent->OnTargetPerceptionUpdated.AddUniqueDynamic(this, &ThisClass::OnEnemyPerceptionUpdated);
+
+  SetGenericTeamId(FGenericTeamId(1));
+}
+
+ETeamAttitude::Type ASoulAIController::GetTeamAttitudeTowards(const AActor& Other) const
+{
+  const APawn* PawnToCheck = Cast<const APawn>(&Other);
+
+  const IGenericTeamAgentInterface* OtherTeamAgent = Cast<const IGenericTeamAgentInterface>(PawnToCheck->GetController());
+
+  if (OtherTeamAgent && OtherTeamAgent->GetGenericTeamId() != GetGenericTeamId())
+  {
+    return ETeamAttitude::Hostile;
+  }
+  return ETeamAttitude::Friendly;
 }
 
 void ASoulAIController::OnEnemyPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
-
+  if (Stimulus.WasSuccessfullySensed() && Actor)
+  {
+    Debug::Print(Actor->GetActorNameOrLabel() + TEXT(" was sensed"), FColor::Green);
+  }
 }

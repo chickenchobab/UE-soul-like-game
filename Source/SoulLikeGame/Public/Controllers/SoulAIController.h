@@ -19,6 +19,10 @@ class SOULLIKEGAME_API ASoulAIController : public AAIController
 	
 public:
 	ASoulAIController(const FObjectInitializer& ObjectInitializer);
+
+	//~ Begin IGenericTeamAgentInterface Interface
+	virtual ETeamAttitude::Type GetTeamAttitudeTowards(const AActor& Other) const override;
+	//~ End IGenericTeamAgentInterface Interface
 	
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
