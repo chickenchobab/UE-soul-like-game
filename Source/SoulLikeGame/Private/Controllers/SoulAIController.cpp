@@ -5,6 +5,7 @@
 #include "Navigation/CrowdFollowingComponent.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 #include "SoulDebugHelper.h"
 
@@ -40,10 +41,40 @@ ETeamAttitude::Type ASoulAIController::GetTeamAttitudeTowards(const AActor& Othe
   return ETeamAttitude::Friendly;
 }
 
+void ASoulAIController::BeginPlay()
+{
+	Super::BeginPlay();
+
+  if (UCrowdFollowingComponent* CrowdFollowingComp = Cast<UCrowdFollowingComponent>(GetPathFollowingComponent()))
+  {
+    CrowdFollowingComp->SetCrowdSimulationState(bEnableDetourCrowdAvoidance ? ECrowdSimulationState::Enabled : ECrowdSimulationState::Disabled);
+    
+    switch (DetourCrowdAvoidanceQuality)
+    {
+      case 1: CrowdFollowingComp->SetCrowdAvoidanceQuality(ECrowdAvoidanceQuality::Low); 
+        break;
+      case 2: CrowdFollowingComp->SetCrowdAvoidanceQuality(ECrowdAvoidanceQuality::Medium); 
+        break;
+      case 3: CrowdFollowingComp->SetCrowdAvoidanceQuality(ECrowdAvoidanceQuality::Good); 
+        break;
+      case 4: CrowdFollowingComp->SetCrowdAvoidanceQuality(ECrowdAvoidanceQuality::High); 
+        break;
+    }
+
+    CrowdFollowingComp->SetAvoidanceGroup(1);
+    CrowdFollowingComp->SetGroupsToAvoid(1);
+    CrowdFollowingComp->SetCrowdCollisionQueryRange(CollisionQueryRange);
+  }
+}
+
+
 void ASoulAIController::OnEnemyPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
   if (Stimulus.WasSuccessfullySensed() && Actor)
   {
-    Debug::Print(Actor->GetActorNameOrLabel() + TEXT(" was sensed"), FColor::Green);
+    if (UBlackboardComponent* BlackboardComeponent = GetBlackboardComponent())
+    {
+      BlackboardComeponent->SetValueAsObject(FName("TargetActor"), Actor);
+    }
   }
 }
