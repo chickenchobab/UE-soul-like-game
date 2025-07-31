@@ -6,6 +6,9 @@
 #include "AIController.h"
 #include "SoulAIController.generated.h"
 
+class UAIPerceptionComponent;
+class UAISenseConfig_Sight;
+
 /**
  * 
  */
@@ -16,4 +19,14 @@ class SOULLIKEGAME_API ASoulAIController : public AAIController
 	
 public:
 	ASoulAIController(const FObjectInitializer& ObjectInitializer);
+	
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UAIPerceptionComponent* EnemyPerceptionComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UAISenseConfig_Sight* AISenseConfig_Sight;
+
+	UFUNCTION()
+	virtual void OnEnemyPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
 };
