@@ -34,7 +34,7 @@ ETeamAttitude::Type ASoulAIController::GetTeamAttitudeTowards(const AActor& Othe
 
   const IGenericTeamAgentInterface* OtherTeamAgent = Cast<const IGenericTeamAgentInterface>(PawnToCheck->GetController());
 
-  if (OtherTeamAgent && OtherTeamAgent->GetGenericTeamId() != GetGenericTeamId())
+  if (OtherTeamAgent && OtherTeamAgent->GetGenericTeamId() < GetGenericTeamId())
   {
     return ETeamAttitude::Hostile;
   }
@@ -70,11 +70,14 @@ void ASoulAIController::BeginPlay()
 
 void ASoulAIController::OnEnemyPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
-  if (Stimulus.WasSuccessfullySensed() && Actor)
+  if (UBlackboardComponent* BlackboardComeponent = GetBlackboardComponent())
   {
-    if (UBlackboardComponent* BlackboardComeponent = GetBlackboardComponent())
+    if (!BlackboardComeponent->GetValueAsObject(FName("TargetActor")))
     {
-      BlackboardComeponent->SetValueAsObject(FName("TargetActor"), Actor);
-    }
+      if (Stimulus.WasSuccessfullySensed() && Actor)
+      {
+        BlackboardComeponent->SetValueAsObject(FName("TargetActor"), Actor);
+      }
+    } 
   }
 }
