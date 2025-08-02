@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
+#include "GameplayTagContainer.h"
 #include "SoulBaseAnimInstance.generated.h"
 
 /**
@@ -14,4 +15,7 @@ class SOULLIKEGAME_API USoulBaseAnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
 	
+protected:
+	UFUNCTION(BlueprintCallable, meta = (BlueprintThreadSafe))
+	bool DoesOwnerHaveTag(FGameplayTag TagToCheck) const;
 };

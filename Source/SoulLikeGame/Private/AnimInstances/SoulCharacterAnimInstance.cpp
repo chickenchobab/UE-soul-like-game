@@ -4,6 +4,7 @@
 #include "AnimInstances/SoulCharacterAnimInstance.h"
 #include "Characters/SoulBaseCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "KismetAnimationLibrary.h"
 
 void USoulCharacterAnimInstance::NativeInitializeAnimation()
 {
@@ -20,5 +21,8 @@ void USoulCharacterAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaSeco
   if (!OwningCharacter || !OwningMovementComponent) return;
 
   GroundSpeed = OwningCharacter->GetVelocity().Size2D();
+
   bHasAcceleration = OwningMovementComponent->GetCurrentAcceleration().SizeSquared2D() > 0.f;
+
+  LocomotionDirection = UKismetAnimationLibrary::CalculateDirection(OwningCharacter->GetVelocity(), OwningCharacter->GetActorRotation());
 }

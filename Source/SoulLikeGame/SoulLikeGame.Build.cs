@@ -15,7 +15,8 @@ public class SoulLikeGame : ModuleRules
 			"InputCore",
 			"EnhancedInput",
 			"GameplayTags",
-			"GameplayTasks"
+			"GameplayTasks",
+			"AnimGraphRuntime"	
 			 });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
