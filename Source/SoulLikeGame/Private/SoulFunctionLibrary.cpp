@@ -27,7 +27,7 @@ void USoulFunctionLibrary::RemoveGameplayTagFromActorIfFound(AActor* InActor, FG
 {
 	USoulAbilitySystemComponent* ASC = NativeGetSoulASCFromActor(InActor);
 
-  if (!ASC->HasMatchingGameplayTag(TagToRemove))
+  if (ASC->HasMatchingGameplayTag(TagToRemove))
   {
     ASC->RemoveLooseGameplayTag(TagToRemove);
   }
