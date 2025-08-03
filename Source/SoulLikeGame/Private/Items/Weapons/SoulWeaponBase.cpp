@@ -3,6 +3,7 @@
 
 #include "Items/Weapons/SoulWeaponBase.h"
 #include "Components/BoxComponent.h"
+#include "SoulFunctionLibrary.h"
 
 #include "SoulDebugHelper.h"
 
@@ -29,9 +30,11 @@ void ASoulWeaponBase::OnCollisionBoxBeginOverlap(UPrimitiveComponent* Overlapped
 
 	checkf(WeaponOwningPawn, TEXT("Forgot to assign an instigator as the owning pawn for the weapon : %s"), *GetName());
 
+	
+
 	if (APawn* HitPawn = Cast<APawn>(OtherActor))
 	{
-		if (WeaponOwningPawn != HitPawn)
+		if (USoulFunctionLibrary::IsTargetPawnHostile(WeaponOwningPawn, HitPawn))
 		{
 			OnWeaponHitTarget.ExecuteIfBound(OtherActor);
 		}
@@ -47,7 +50,7 @@ void ASoulWeaponBase::OnCollisionBoxEndOverlap(UPrimitiveComponent* OverlappedCo
 
 	if (APawn* HitPawn = Cast<APawn>(OtherActor))
 	{
-		if (WeaponOwningPawn != HitPawn)
+		if (USoulFunctionLibrary::IsTargetPawnHostile(WeaponOwningPawn, HitPawn))
 		{
 			OnWeaponDetachFromTarget.ExecuteIfBound(OtherActor);
 		}

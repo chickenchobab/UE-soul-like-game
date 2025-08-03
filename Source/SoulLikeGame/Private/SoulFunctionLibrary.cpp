@@ -5,6 +5,7 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystem/SoulAbilitySystemComponent.h"
 #include "Interfaces/PawnCombatInterface.h"
+#include "GenericTeamAgentInterface.h"
 
 USoulAbilitySystemComponent* USoulFunctionLibrary::NativeGetSoulASCFromActor(AActor* InActor)
 {
@@ -65,4 +66,19 @@ UPawnCombatComponent* USoulFunctionLibrary::BP_GetCombatComponentFromActor(AActo
   OutValidType = CombatComponent ? ESoulValidType::Valid : ESoulValidType::InValid;
   
   return CombatComponent;
+}
+
+
+bool USoulFunctionLibrary::IsTargetPawnHostile(APawn* QueryPawn, APawn* TargetPawn)
+{
+  check(QueryPawn && TargetPawn);
+
+  IGenericTeamAgentInterface* QueryTeamAgent = Cast<IGenericTeamAgentInterface>(QueryPawn->GetController());
+  IGenericTeamAgentInterface* TargetTeamAgent = Cast<IGenericTeamAgentInterface>(TargetPawn->GetController());
+
+  if (QueryTeamAgent && TargetTeamAgent)
+  {
+    return QueryTeamAgent->GetGenericTeamId() != TargetTeamAgent->GetGenericTeamId();
+  }
+  return false;
 }
