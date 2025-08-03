@@ -55,7 +55,10 @@ FGameplayEffectSpecHandle USoulHeroGameplayAbility::MakeHeroDamageEffectSpecHand
 
   if (InCurrentAttackTypeTag.IsValid())
   {
-    EffectSpecHandle.Data->SetSetByCallerMagnitude(InCurrentAttackTypeTag, InUsedComboCount);
+    EffectSpecHandle.Data->SetSetByCallerMagnitude(
+      InCurrentAttackTypeTag, 
+      InUsedComboCount
+    );
   }
 
   return EffectSpecHandle;
