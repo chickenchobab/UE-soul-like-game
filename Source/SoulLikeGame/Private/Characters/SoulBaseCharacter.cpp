@@ -4,6 +4,7 @@
 #include "Characters/SoulBaseCharacter.h"
 #include "AbilitySystem/SoulAbilitySystemComponent.h"
 #include "AbilitySystem/SoulAttributeSet.h"
+#include "MotionWarpingComponent.h"
 
 // Sets default values
 ASoulBaseCharacter::ASoulBaseCharacter()
@@ -17,6 +18,8 @@ ASoulBaseCharacter::ASoulBaseCharacter()
 	SoulAbilitySystemComponent = CreateDefaultSubobject<USoulAbilitySystemComponent>(TEXT("SoulAbilitySystemComponent"));
 
 	SoulAttributeSet = CreateDefaultSubobject<USoulAttributeSet>(TEXT("SoulAttributeSet"));
+
+	MotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>(TEXT("MotionWarpingComponent"));
 }
  
 
