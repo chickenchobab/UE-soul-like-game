@@ -82,3 +82,10 @@ bool USoulFunctionLibrary::IsTargetPawnHostile(APawn* QueryPawn, APawn* TargetPa
   }
   return false;
 }
+
+
+float USoulFunctionLibrary::GetScalableFloatValueAtLevel(const FScalableFloat& InScalableFloat, float InLevel)
+{
+  return InScalableFloat.GetValueAtLevel(InLevel);
+}
+
