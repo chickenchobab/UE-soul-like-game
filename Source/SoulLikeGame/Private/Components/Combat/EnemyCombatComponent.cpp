@@ -4,6 +4,7 @@
 #include "Components/Combat/EnemyCombatComponent.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "SoulGameplayTags.h"
+#include "SoulFunctionLibrary.h"
 
 #include "SoulDebugHelper.h"
 

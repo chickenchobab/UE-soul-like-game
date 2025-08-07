@@ -3,6 +3,7 @@
 
 #include "AbilitySystem/SoulAbilitySystemComponent.h"
 #include "AbilitySystem/Abilities/SoulGameplayAbility.h"
+#include "SoulGameplayTags.h"
 
 
 void USoulAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& InInputTag)
@@ -18,7 +19,15 @@ void USoulAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& InIn
 
 void USoulAbilitySystemComponent::OnAbilityInputReleased(const FGameplayTag& InInputTag)
 {
-	if (!InInputTag.IsValid()) return;
+	if (!InInputTag.IsValid() || !InInputTag.MatchesTag(SoulGameplayTags::InputTag_MustBeHeld)) return;
+
+  for (const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+  {
+    if (AbilitySpec.GetDynamicSpecSourceTags().HasTagExact(InInputTag) && AbilitySpec.IsActive())
+    {
+      CancelAbilityHandle(AbilitySpec.Handle);
+    }
+  }
 }
 
 
