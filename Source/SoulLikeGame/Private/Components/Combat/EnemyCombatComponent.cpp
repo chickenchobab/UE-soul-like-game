@@ -16,12 +16,12 @@ void UEnemyCombatComponent::OnWeaponHitTargetActor(AActor* HitActor)
 
   bool bIsValidBlock = false;
 
-  const bool bIsPlayerBlocking = false;
+  const bool bIsPlayerBlocking = USoulFunctionLibrary::NativeDoesActorHaveTag(HitActor, SoulGameplayTags::Player_Status_Blocking);
   const bool bIsMyAttackUnblockable = false;
 
   if (bIsPlayerBlocking && !bIsMyAttackUnblockable)
   {
-    //TODO::Check if the block is valid
+    bIsValidBlock = USoulFunctionLibrary::IsValidBlock(GetOwningPawn(), HitActor);
   }
 
   FGameplayEventData EventData;
@@ -30,7 +30,11 @@ void UEnemyCombatComponent::OnWeaponHitTargetActor(AActor* HitActor)
 
   if (bIsValidBlock)
   {
-    //TODO::Handle successful block
+    UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+      HitActor,
+      SoulGameplayTags::Player_Event_SuccessfulBlock,
+      EventData
+    );
   }
   else
   {

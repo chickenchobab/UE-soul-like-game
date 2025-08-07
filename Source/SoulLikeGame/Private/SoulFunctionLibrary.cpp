@@ -9,6 +9,8 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "SoulGameplayTags.h"
 
+#include "SoulDebugHelper.h"
+
 USoulAbilitySystemComponent* USoulFunctionLibrary::NativeGetSoulASCFromActor(AActor* InActor)
 {
   check(InActor);
@@ -124,4 +126,17 @@ FGameplayTag USoulFunctionLibrary::ComputeHitReactDirectionTag(AActor* InAttacke
     return SoulGameplayTags::Shared_Status_HitReact_Right;
   }
   return SoulGameplayTags::Shared_Status_HitReact_Front;
+}
+
+
+bool USoulFunctionLibrary::IsValidBlock(AActor* InAttacker, AActor* InDefender)
+{
+  check(InAttacker && InDefender);
+
+  const float DotResult = FVector::DotProduct(InAttacker->GetActorForwardVector(), InDefender->GetActorForwardVector());
+
+  // const FString DebugString = FString::Printf(TEXT("Dot Result: %f %s"), DotResult, DotResult < -0.1f ? TEXT("Valid block") : TEXT("Invalid block"));
+  // Debug::Print(DebugString, DotResult < -0.1f ? FColor::Green : FColor::Red);
+
+  return DotResult < -0.1f;
 }
