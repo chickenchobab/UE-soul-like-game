@@ -6,6 +6,8 @@
 #include "AbilitySystem/SoulAbilitySystemComponent.h"
 #include "Interfaces/PawnCombatInterface.h"
 #include "GenericTeamAgentInterface.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "SoulGameplayTags.h"
 
 USoulAbilitySystemComponent* USoulFunctionLibrary::NativeGetSoulASCFromActor(AActor* InActor)
 {
@@ -89,3 +91,37 @@ float USoulFunctionLibrary::GetScalableFloatValueAtLevel(const FScalableFloat& I
   return InScalableFloat.GetValueAtLevel(InLevel);
 }
 
+
+
+FGameplayTag USoulFunctionLibrary::ComputeHitReactDirectionTag(AActor* InAttacker, AActor* InVictim, float& OutAngleDifference)
+{
+  check(InAttacker && InVictim);
+
+  const FVector VictimForward = InVictim->GetActorForwardVector();
+  const FVector AttackDirection = (InVictim->GetActorLocation() - InAttacker->GetActorLocation()).GetSafeNormal();
+
+  const float DotResult = FVector::DotProduct(VictimForward, AttackDirection);
+
+  OutAngleDifference = UKismetMathLibrary::DegCos(DotResult);
+
+  const FVector CrossResult = FVector::CrossProduct(VictimForward, AttackDirection);
+
+  if (CrossResult.Z < 0.f)
+  {
+    OutAngleDifference *= -1;
+  }
+
+  if (OutAngleDifference >= -45.f && OutAngleDifference < 45.f)
+  {
+    return SoulGameplayTags::Shared_Status_HitReact_Back;
+  }
+  else if (OutAngleDifference >= 45.f && OutAngleDifference < 135.f)
+  {
+    return SoulGameplayTags::Shared_Status_HitReact_Left;
+  }
+  else if (OutAngleDifference < -45.f && OutAngleDifference >= -135.f)
+  {
+    return SoulGameplayTags::Shared_Status_HitReact_Right;
+  }
+  return SoulGameplayTags::Shared_Status_HitReact_Front;
+}
