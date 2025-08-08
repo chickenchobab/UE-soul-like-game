@@ -5,6 +5,8 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Characters/SoulHeroCharacter.h"
 #include "Kismet/GameplayStatics.h"
+#include "Widgets/SoulWidgetBase.h"
+#include "Controllers/SoulHeroController.h"
 
 #include "SoulDebugHelper.h"
 
@@ -37,7 +39,7 @@ void UHeroGameplayAbility_TargetLock::TryLockOnTarget()
 
 	if (CurrentLockedActor)
 	{
-		Debug::Print(CurrentLockedActor->GetActorNameOrLabel());
+		DrawTargetLockWidget();
 	}
 	else
 	{
@@ -84,6 +86,20 @@ AActor* UHeroGameplayAbility_TargetLock::GetNearestTargetFromAvailableActors(con
 }
 
 
+void UHeroGameplayAbility_TargetLock::DrawTargetLockWidget()
+{
+	if (DrawnTargetLockWidget) return;
+
+	checkf(TargetLockWidgetClass, TEXT("Forgot to assign a valid widget class in Blueprint"));
+
+	DrawnTargetLockWidget = CreateWidget<USoulWidgetBase>(GetHeroControllerFromActorInfo(), TargetLockWidgetClass);
+
+	check(DrawnTargetLockWidget);
+
+	DrawnTargetLockWidget->AddToViewport();
+}
+
+
 void UHeroGameplayAbility_TargetLock::CancelTargetLockAbility()
 {
 	CancelAbility(GetCurrentAbilitySpecHandle(), GetCurrentActorInfo(), GetCurrentActivationInfo(), true);
@@ -95,4 +111,9 @@ void UHeroGameplayAbility_TargetLock::CleanUp()
 	AvailableActorsToLock.Empty();
 
 	CurrentLockedActor = nullptr;
+
+	if (DrawnTargetLockWidget)
+	{
+		DrawnTargetLockWidget->RemoveFromParent();
+	}
 }

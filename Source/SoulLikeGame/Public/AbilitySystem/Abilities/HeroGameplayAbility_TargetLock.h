@@ -6,6 +6,8 @@
 #include "AbilitySystem/Abilities/SoulHeroGameplayAbility.h"
 #include "HeroGameplayAbility_TargetLock.generated.h"
 
+class USoulWidgetBase;
+
 /**
  * 
  */
@@ -24,6 +26,7 @@ private:
 	void TryLockOnTarget();
 	void GetAvailableActorsToLock();
 	AActor* GetNearestTargetFromAvailableActors(const TArray<AActor*>& InAvailableActors);
+	void DrawTargetLockWidget();
 
 	void CancelTargetLockAbility();
 	void CleanUp();
@@ -45,4 +48,10 @@ private:
 
 	UPROPERTY()
 	AActor* CurrentLockedActor;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Target Lock")
+	TSubclassOf<USoulWidgetBase> TargetLockWidgetClass;
+
+	UPROPERTY()
+	USoulWidgetBase* DrawnTargetLockWidget;
 };
