@@ -7,6 +7,11 @@
 #include "Kismet/GameplayStatics.h"
 #include "Widgets/SoulWidgetBase.h"
 #include "Controllers/SoulHeroController.h"
+#include "Blueprint/WidgetLayoutLibrary.h"
+#include "Blueprint/WidgetTree.h"
+#include "Components/SizeBox.h"
+#include "SoulFunctionLibrary.h"
+#include "SoulGameplayTags.h"
 
 #include "SoulDebugHelper.h"
 
@@ -25,6 +30,21 @@ void UHeroGameplayAbility_TargetLock::EndAbility(const FGameplayAbilitySpecHandl
 }
 
 
+void UHeroGameplayAbility_TargetLock::OnTargetLockTick(float DeltaTime)
+{
+	if (!CurrentLockedActor || 
+		USoulFunctionLibrary::NativeDoesActorHaveTag(CurrentLockedActor, SoulGameplayTags::Shared_Status_Dead) ||
+		USoulFunctionLibrary::NativeDoesActorHaveTag(GetHeroCharacterFromActorInfo(), SoulGameplayTags::Shared_Status_Dead)
+		)
+	{
+		CancelTargetLockAbility();
+		return;
+	}
+
+	SetTargetLockWidgetPosition();
+}
+
+
 void UHeroGameplayAbility_TargetLock::TryLockOnTarget()
 {
 	GetAvailableActorsToLock();
@@ -40,6 +60,7 @@ void UHeroGameplayAbility_TargetLock::TryLockOnTarget()
 	if (CurrentLockedActor)
 	{
 		DrawTargetLockWidget();
+		SetTargetLockWidgetPosition();
 	}
 	else
 	{
@@ -100,6 +121,43 @@ void UHeroGameplayAbility_TargetLock::DrawTargetLockWidget()
 }
 
 
+void UHeroGameplayAbility_TargetLock::SetTargetLockWidgetPosition()
+{
+	if (!DrawnTargetLockWidget || !CurrentLockedActor)
+	{
+		CancelTargetLockAbility();
+		return;
+	}
+
+	FVector2D ScreenPosition;
+
+	UWidgetLayoutLibrary::ProjectWorldLocationToWidgetPosition(
+		GetHeroControllerFromActorInfo(),
+		CurrentLockedActor->GetActorLocation(),
+		ScreenPosition,
+		true
+	);
+
+	if (TargetLockWidgetSize == FVector2D::ZeroVector)
+	{
+		DrawnTargetLockWidget->WidgetTree->ForEachWidget(
+			[this](UWidget* FoundWidget)
+			{
+				if (USizeBox* FoundSizeBox = Cast<USizeBox>(FoundWidget))
+				{
+					TargetLockWidgetSize.X = FoundSizeBox->GetWidthOverride();
+					TargetLockWidgetSize.Y = FoundSizeBox->GetHeightOverride();
+				}
+			}
+		);
+	}
+
+	ScreenPosition -= (TargetLockWidgetSize / 2.f);
+
+	DrawnTargetLockWidget->SetPositionInViewport(ScreenPosition, false);
+}
+
+
 void UHeroGameplayAbility_TargetLock::CancelTargetLockAbility()
 {
 	CancelAbility(GetCurrentAbilitySpecHandle(), GetCurrentActorInfo(), GetCurrentActivationInfo(), true);
@@ -116,4 +174,7 @@ void UHeroGameplayAbility_TargetLock::CleanUp()
 	{
 		DrawnTargetLockWidget->RemoveFromParent();
 	}
+
+	DrawnTargetLockWidget = nullptr;
+	TargetLockWidgetSize = FVector2D::ZeroVector;
 }
