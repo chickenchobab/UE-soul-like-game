@@ -47,6 +47,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Target Lock")
 	bool bShowPersistentDebugShape = false;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Target Lock")
+	float TargetLockRotationInterpSpeed = 5.f;
+
 	UPROPERTY()
 	TArray<AActor*> AvailableActorsToLock;
 
