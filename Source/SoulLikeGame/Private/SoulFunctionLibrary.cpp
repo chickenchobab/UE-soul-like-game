@@ -104,13 +104,13 @@ FGameplayTag USoulFunctionLibrary::ComputeHitReactDirectionTag(AActor* InAttacke
 
   const float DotResult = FVector::DotProduct(VictimForward, AttackDirection);
 
-  OutAngleDifference = UKismetMathLibrary::DegCos(DotResult);
+  OutAngleDifference = UKismetMathLibrary::DegAcos(DotResult);
 
   const FVector CrossResult = FVector::CrossProduct(VictimForward, AttackDirection);
 
   if (CrossResult.Z < 0.f)
   {
-    OutAngleDifference *= -1;
+    OutAngleDifference *= -1.f;
   }
 
   if (OutAngleDifference >= -45.f && OutAngleDifference < 45.f)
