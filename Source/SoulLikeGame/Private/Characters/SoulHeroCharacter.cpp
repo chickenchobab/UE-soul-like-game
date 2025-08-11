@@ -14,6 +14,7 @@
 #include "DataAssets/StartUpData/DataAsset_StartUpDataBase.h"
 #include "Components/Combat/HeroCombatComponent.h"
 #include "Components/UI/HeroUIComponent.h"
+#include "AbilitySystemBlueprintLibrary.h"
 
 #include "SoulDebugHelper.h"
 
@@ -74,6 +75,9 @@ void ASoulHeroCharacter::SetupPlayerInputComponent(class UInputComponent* Player
   SoulInputComponent->BindNativeInputAction(InputConfigDataAsset, SoulGameplayTags::InputTag_Move, ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
   SoulInputComponent->BindNativeInputAction(InputConfigDataAsset, SoulGameplayTags::InputTag_Look, ETriggerEvent::Triggered, this, &ThisClass::Input_Look);
 
+  SoulInputComponent->BindNativeInputAction(InputConfigDataAsset, SoulGameplayTags::InputTag_SwitchTarget, ETriggerEvent::Triggered, this, &ThisClass::Input_SwitchTargetTriggered);
+  SoulInputComponent->BindNativeInputAction(InputConfigDataAsset, SoulGameplayTags::InputTag_SwitchTarget, ETriggerEvent::Completed, this, &ThisClass::Input_SwitchTargetCompleted);
+
   SoulInputComponent->BindAbilityInputAction(InputConfigDataAsset, this, &ThisClass::Input_AbilityInputPressed, &ThisClass::Input_AbilityInputReleased);
 }
 
@@ -119,10 +123,32 @@ void ASoulHeroCharacter::Input_Look(const FInputActionValue& InputActionValue)
   AddControllerPitchInput(LookAxisVector.Y);
 }
 
+
+void ASoulHeroCharacter::Input_SwitchTargetTriggered(const FInputActionValue& InputActionValue)
+{
+	SwitchDirection = InputActionValue.Get<FVector2D>();
+}
+ 
+
+void ASoulHeroCharacter::Input_SwitchTargetCompleted(const FInputActionValue& InputActionValue)
+{
+	FGameplayEventData Data;
+
+  UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+    this,
+    SwitchDirection.X > 0.f ? SoulGameplayTags::Player_Event_SwitchTarget_Right : SoulGameplayTags::Player_Event_SwitchTarget_Left,
+    Data
+  );
+
+  Debug::Print(TEXT("SwitchDirection: ") + SwitchDirection.ToString());
+}
+
+
 void ASoulHeroCharacter::Input_AbilityInputPressed(FGameplayTag InInputTag)
 {
 	SoulAbilitySystemComponent->OnAbilityInputPressed(InInputTag);
 }
+
 
 void ASoulHeroCharacter::Input_AbilityInputReleased(FGameplayTag InInputTag)
 {
