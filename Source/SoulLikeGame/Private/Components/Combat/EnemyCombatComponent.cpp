@@ -17,7 +17,7 @@ void UEnemyCombatComponent::OnWeaponHitTargetActor(AActor* HitActor)
   bool bIsValidBlock = false;
 
   const bool bIsPlayerBlocking = USoulFunctionLibrary::NativeDoesActorHaveTag(HitActor, SoulGameplayTags::Player_Status_Blocking);
-  const bool bIsMyAttackUnblockable = false;
+  const bool bIsMyAttackUnblockable = USoulFunctionLibrary::NativeDoesActorHaveTag(GetOwningPawn(), SoulGameplayTags::Enemy_Status_Unblockable);
 
   if (bIsPlayerBlocking && !bIsMyAttackUnblockable)
   {
