@@ -140,3 +140,14 @@ bool USoulFunctionLibrary::IsValidBlock(AActor* InAttacker, AActor* InDefender)
 
   return DotResult < -0.1f;
 }
+
+
+bool USoulFunctionLibrary::ApplyGameplayEffectSpecHandleToTargetActor(AActor* InInstigator, AActor* InTargetActor, const FGameplayEffectSpecHandle& InSpecHandle)
+{
+  USoulAbilitySystemComponent* SourceASC = NativeGetSoulASCFromActor(InInstigator);
+  USoulAbilitySystemComponent* TargetASC = NativeGetSoulASCFromActor(InTargetActor);
+
+  FActiveGameplayEffectHandle ActiveGameplayEffectHandle = SourceASC->ApplyGameplayEffectSpecToTarget(*InSpecHandle.Data, TargetASC);
+
+  return ActiveGameplayEffectHandle.WasSuccessfullyApplied();
+}
