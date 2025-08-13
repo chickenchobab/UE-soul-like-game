@@ -27,5 +27,6 @@ protected:
 	void BP_OnOwningEnemyUIComponentInitialized(UEnemyUIComponent* OwningEnemyUIComponent);
 
 public:
+	UFUNCTION(BlueprintCallable)
 	void InitializeEnemyCreatedWidget(AActor* OwningEnemyActor);
 };
