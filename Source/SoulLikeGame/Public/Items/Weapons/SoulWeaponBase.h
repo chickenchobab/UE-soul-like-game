@@ -22,7 +22,7 @@ public:
 	FORCEINLINE UBoxComponent* GetWeaponCollisionBox() const { return WeaponCollisionBox; }
 
 	FOnTargetInteractedDelegate OnWeaponHitTarget;
-	FOnTargetInteractedDelegate OnWeaponDetachFromTarget;
+	FOnTargetInteractedDelegate PostWeaponHitTarget;
 
 protected:
 	UFUNCTION()

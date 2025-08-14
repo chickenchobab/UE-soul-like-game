@@ -26,6 +26,6 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Combat")
 	float GetHeroCurrentEquippedWeaponDamageAtLevel(float InLevel) const;
 
-	virtual void OnWeaponHitTargetActor(AActor* HitActor) override;
-	virtual void OnWeaponDetachFromTargetActor(AActor* HitActor) override;
+	virtual void OnHitTargetActor(AActor* HitActor) override;
+	virtual void PostHitTargetActor(AActor* HitActor) override;
 };

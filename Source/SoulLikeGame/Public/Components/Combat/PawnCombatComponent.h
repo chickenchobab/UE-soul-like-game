@@ -37,13 +37,16 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Combat")
 	void ToggleWeaponCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType = EToggleDamageType::CurrentEquippedWeapon);
 
-	virtual void OnWeaponHitTargetActor(AActor* HitActor);
-	virtual void OnWeaponDetachFromTargetActor(AActor* HitActor);
+	virtual void OnHitTargetActor(AActor* HitActor);
+	virtual void PostHitTargetActor(AActor* HitActor);
 
 	UPROPERTY(BlueprintReadWrite, Category = "Combat")
 	FGameplayTag CurrentEquippedWeaponTag;
 
 protected:
+	virtual void ToggleCurrentEquippedWeaponCollision(bool bShouldEnable);
+	virtual void ToggleBodyCollisionBoxCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType);
+
 	TArray<AActor*> OverlappedActors;
 
 private:	

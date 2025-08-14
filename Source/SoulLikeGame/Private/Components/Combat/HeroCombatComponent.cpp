@@ -23,7 +23,7 @@ float UHeroCombatComponent::GetHeroCurrentEquippedWeaponDamageAtLevel(float InLe
 	return GetHeroCurrentEquippedWeapon()->HeroWeaponData.WeaponBaseDamage.GetValueAtLevel(InLevel);
 }
 
-void UHeroCombatComponent::OnWeaponHitTargetActor(AActor* HitActor)
+void UHeroCombatComponent::OnHitTargetActor(AActor* HitActor)
 {
 	if (OverlappedActors.Contains(HitActor)) return;
 
@@ -46,7 +46,7 @@ void UHeroCombatComponent::OnWeaponHitTargetActor(AActor* HitActor)
   );
 }
 
-void UHeroCombatComponent::OnWeaponDetachFromTargetActor(AActor* HitActor)
+void UHeroCombatComponent::PostHitTargetActor(AActor* HitActor)
 {
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
     GetOwningPawn(),

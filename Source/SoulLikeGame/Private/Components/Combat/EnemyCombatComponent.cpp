@@ -5,10 +5,12 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "SoulGameplayTags.h"
 #include "SoulFunctionLibrary.h"
+#include "Characters/SoulEnemyCharacter.h"
+#include "Components/BoxComponent.h"
 
 #include "SoulDebugHelper.h"
 
-void UEnemyCombatComponent::OnWeaponHitTargetActor(AActor* HitActor)
+void UEnemyCombatComponent::OnHitTargetActor(AActor* HitActor)
 {
   if (OverlappedActors.Contains(HitActor)) return;
 
@@ -45,3 +47,34 @@ void UEnemyCombatComponent::OnWeaponHitTargetActor(AActor* HitActor)
     );
   }
 }
+
+
+void UEnemyCombatComponent::ToggleBodyCollisionBoxCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType)
+{
+  ASoulEnemyCharacter* OwningEnemyCharacter = GetOwningPawn<ASoulEnemyCharacter>();
+
+  check(OwningEnemyCharacter);
+
+  UBoxComponent* LeftHandCollisionBox = OwningEnemyCharacter->GetLeftHandCollisionBox();
+  UBoxComponent* RightHandCollisionBox = OwningEnemyCharacter->GetRightHandCollisionBox();
+
+  check(LeftHandCollisionBox && RightHandCollisionBox);
+
+  switch (ToggleDamageType)
+  {
+  case EToggleDamageType::LeftHand:
+    LeftHandCollisionBox->SetCollisionEnabled(bShouldEnable ? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision);
+    break;
+  case EToggleDamageType::RightHand:
+    RightHandCollisionBox->SetCollisionEnabled(bShouldEnable ? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision);
+    break;
+  default:
+    break;
+  }
+  
+  if (!bShouldEnable)
+  {
+    OverlappedActors.Empty();
+  }
+}
+

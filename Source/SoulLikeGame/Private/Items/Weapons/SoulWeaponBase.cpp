@@ -52,7 +52,7 @@ void ASoulWeaponBase::OnCollisionBoxEndOverlap(UPrimitiveComponent* OverlappedCo
 	{
 		if (USoulFunctionLibrary::IsTargetPawnHostile(WeaponOwningPawn, HitPawn))
 		{
-			OnWeaponDetachFromTarget.ExecuteIfBound(OtherActor);
+			PostWeaponHitTarget.ExecuteIfBound(OtherActor);
 		}
 	}
 }
