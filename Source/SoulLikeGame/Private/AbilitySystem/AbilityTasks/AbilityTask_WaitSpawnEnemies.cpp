@@ -46,7 +46,7 @@ void UAbilityTask_WaitSpawnEnemies::OnDestroy(bool bInOwnerFinished)
 
 void UAbilityTask_WaitSpawnEnemies::OnGameplayEventReceived(const FGameplayEventData* InPayload)
 {
-  if (ensure(CachedSoftEnemyClassToSpawn.IsValid()))
+  if (ensure(CachedSoftEnemyClassToSpawn.IsNull()))
   {
     UAssetManager::Get().GetStreamableManager().RequestAsyncLoad(
       CachedSoftEnemyClassToSpawn.ToSoftObjectPath(),
