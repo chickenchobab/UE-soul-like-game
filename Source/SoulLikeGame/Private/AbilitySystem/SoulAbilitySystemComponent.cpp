@@ -14,16 +14,9 @@ void USoulAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& InIn
   {
     if (!AbilitySpec.GetDynamicSpecSourceTags().HasTagExact(InInputTag)) continue;
 
-    if (InInputTag.MatchesTag(SoulGameplayTags::InputTag_Toggleable))
+    if (InInputTag.MatchesTag(SoulGameplayTags::InputTag_Toggleable) && AbilitySpec.IsActive())
     {
-      if (AbilitySpec.IsActive())
-      {
-        CancelAbilityHandle(AbilitySpec.Handle);
-      }
-      else
-      {
-        TryActivateAbility(AbilitySpec.Handle);
-      }
+      CancelAbilityHandle(AbilitySpec.Handle);
     }
     else
     {
