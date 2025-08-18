@@ -51,6 +51,20 @@ void USoulAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectMo
 
     SetCurrentRage(NewRage);
 
+    if (GetCurrentRage() == GetMaxRage())
+    {
+      USoulFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(), SoulGameplayTags::Player_Status_Rage_Full);
+    }
+    else if (GetCurrentRage() == 0.f)
+    {
+      USoulFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(), SoulGameplayTags::Player_Status_Rage_None);
+    }
+    else
+    {
+      USoulFunctionLibrary::RemoveGameplayTagFromActorIfFound(Data.Target.GetAvatarActor(), SoulGameplayTags::Player_Status_Rage_Full);
+      USoulFunctionLibrary::RemoveGameplayTagFromActorIfFound(Data.Target.GetAvatarActor(), SoulGameplayTags::Player_Status_Rage_None);
+    }
+
     if (UHeroUIComponent* HeroUIComponent = Cast<UHeroUIComponent>(PawnUICoponent))
     {
       HeroUIComponent->OnCurrentRageChanged.Broadcast(GetCurrentRage() / GetMaxRage());
