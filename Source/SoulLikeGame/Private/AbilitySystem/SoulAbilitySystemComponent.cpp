@@ -39,11 +39,23 @@ void USoulAbilitySystemComponent::OnAbilityInputReleased(const FGameplayTag& InI
 }
 
 
-void USoulAbilitySystemComponent::GrantHeroWeaponAbilities(const TArray<FSoulHeroAbilitySet>& InDefaultWeaponAbilities, int32 ApplyLevel, TArray<FGameplayAbilitySpecHandle>& OutGrantedAbilitySpecHandles)
+void USoulAbilitySystemComponent::GrantHeroWeaponAbilities(const TArray<FSoulHeroAbilitySet>& InDefaultWeaponAbilities, const TArray<FSoulHeroSpecialAbilitySet>& InSpecialWeaponAbilities, int32 ApplyLevel, TArray<FGameplayAbilitySpecHandle>& OutGrantedAbilitySpecHandles)
 {
   if (InDefaultWeaponAbilities.IsEmpty()) return;
 
   for (const FSoulHeroAbilitySet& AbilitySet : InDefaultWeaponAbilities)
+  {
+    if (!AbilitySet.IsValid()) continue;
+
+    FGameplayAbilitySpec AbilitySpec(AbilitySet.AbilityToGrant);
+    AbilitySpec.SourceObject = GetAvatarActor();
+    AbilitySpec.Level = ApplyLevel;
+    AbilitySpec.GetDynamicSpecSourceTags().AddTag(AbilitySet.InputTag);
+
+    OutGrantedAbilitySpecHandles.AddUnique(GiveAbility(AbilitySpec));
+  }
+
+  for (const FSoulHeroSpecialAbilitySet& AbilitySet : InSpecialWeaponAbilities)
   {
     if (!AbilitySet.IsValid()) continue;
 
