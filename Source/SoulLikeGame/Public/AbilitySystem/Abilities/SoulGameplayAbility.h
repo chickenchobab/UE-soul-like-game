@@ -31,6 +31,9 @@ protected:
 	virtual void OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) override;
 	virtual void EndAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bWasCancelled) override;
 	//~ End UGameplayAbility Interface
+
+	UPROPERTY(EditDefaultsOnly, Category = "SoulAbility")
+	ESoulAbilityActivationPolicy AbilityActivationPolicy = ESoulAbilityActivationPolicy::OnTriggered;
 	
 	UFUNCTION(BlueprintPure, Category = "SoulAbility")
 	UPawnCombatComponent* GetPawnCombatComponentFromActorInfo() const;
@@ -43,7 +46,6 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "SoulAbility", meta = (DisplayName = "Apply Gameplay Effect Spec Handle To Target Actor", ExpandEnumAsExecs = "OutSuccessType"))
 	FActiveGameplayEffectHandle BP_ApplyEffectSpecHandleToTarget(AActor* TargetActor, const FGameplayEffectSpecHandle& InSpecHandle, ESoulSuccessType& OutSuccessType);
 	
-	UPROPERTY(EditDefaultsOnly, Category = "SoulAbility")
-	ESoulAbilityActivationPolicy AbilityActivationPolicy = ESoulAbilityActivationPolicy::OnTriggered;
+	UFUNCTION(BlueprintCallable, Category = "SoulAbility")
+	void ApplyGameplayEffectSpecHandleToHitResults(const FGameplayEffectSpecHandle& InSpecHandle, const TArray<FHitResult>& InHitResults);
 };
-

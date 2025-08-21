@@ -5,6 +5,8 @@
 #include "AbilitySystem/SoulAbilitySystemComponent.h"
 #include "Components/Combat/PawnCombatComponent.h"
 #include "AbilitySystemBlueprintLibrary.h"
+#include "SoulFunctionLibrary.h"
+#include "SoulGameplayTags.h"
 
 void USoulGameplayAbility::OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec)
 {
@@ -68,3 +70,35 @@ FActiveGameplayEffectHandle USoulGameplayAbility::BP_ApplyEffectSpecHandleToTarg
   return ActiveGameplayEffectHandle;
 }
 
+
+
+void USoulGameplayAbility::ApplyGameplayEffectSpecHandleToHitResults(const FGameplayEffectSpecHandle& InSpecHandle, const TArray<FHitResult>& InHitResults)
+{
+  if (InHitResults.IsEmpty()) return;
+
+  APawn* OwningPawn = CastChecked<APawn>(GetAvatarActorFromActorInfo());
+
+  for (const FHitResult& Hit : InHitResults)
+  {
+    if (APawn* HitPawn = Cast<APawn>(Hit.GetActor()))
+    {
+      if (USoulFunctionLibrary::IsTargetPawnHostile(OwningPawn, HitPawn))
+      {
+        FActiveGameplayEffectHandle ActiveGameplayEffectHandle = NativeApplyEffectSpecHandleToTarget(HitPawn, InSpecHandle);
+
+        if (ActiveGameplayEffectHandle.WasSuccessfullyApplied())
+        {
+          FGameplayEventData Data;
+          Data.Instigator = OwningPawn;
+          Data.Target = HitPawn;
+
+          UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+            HitPawn,
+            SoulGameplayTags::Shared_Event_HitReact,
+            Data
+          );
+        }
+      }
+    }
+  }
+}
