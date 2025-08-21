@@ -30,6 +30,9 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "SoulAbility")
 	FGameplayEffectSpecHandle MakeHeroDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass, float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag, int32 InUsedComboCount);
+
+	UFUNCTION(BlueprintCallable, Category = "SoulAbility")
+	bool GetAbilityRemainingCooldownByTag(FGameplayTag InCooldownTag, float& TotalCooldownTime, float& RemainingCooldownTime);
 	
 private:
 	TWeakObjectPtr<ASoulHeroCharacter> CachedHeroCharacter;

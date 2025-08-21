@@ -52,4 +52,12 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "FunctionLibrary")
 	static bool ApplyGameplayEffectSpecHandleToTargetActor(AActor* InInstigator, AActor* InTargetActor, const FGameplayEffectSpecHandle& InSpecHandle);
+
+	UFUNCTION(BlueprintCallable, Category = "FunctionLibrary", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", ExpandEnumAsExecs = "CountDownInput|CountDownOutput", TotalTime = "1.0", UpdateInterval = "0.1"))
+	static void CountDown
+	(	const UObject* WorldContextObject, 
+		float TotalTime, float UpdateInterval, float& OutRemainingTime, 
+		ESoulCountDownActionInput CountDownInput, UPARAM(DisplayName = "Output") ESoulCountDownActionOutput& CountDownOutput,
+		FLatentActionInfo LatentInfo
+	);
 };

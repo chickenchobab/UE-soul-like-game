@@ -8,7 +8,7 @@
 #include "GenericTeamAgentInterface.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "SoulGameplayTags.h"
-
+#include "SoulTypes/SoulCountDownAction.h"
 #include "SoulDebugHelper.h"
 
 USoulAbilitySystemComponent* USoulFunctionLibrary::NativeGetSoulASCFromActor(AActor* InActor)
@@ -150,4 +150,45 @@ bool USoulFunctionLibrary::ApplyGameplayEffectSpecHandleToTargetActor(AActor* In
   FActiveGameplayEffectHandle ActiveGameplayEffectHandle = SourceASC->ApplyGameplayEffectSpecToTarget(*InSpecHandle.Data, TargetASC);
 
   return ActiveGameplayEffectHandle.WasSuccessfullyApplied();
+}
+
+
+void USoulFunctionLibrary::CountDown
+( const UObject* WorldContextObject, float TotalTime, float UpdateInterval, float& OutRemainingTime, 
+  ESoulCountDownActionInput CountDownInput, UPARAM(DisplayName = "Output") ESoulCountDownActionOutput& CountDownOutput,
+  FLatentActionInfo LatentInfo
+)
+{
+  UWorld* World = nullptr;
+
+  if (GEngine)
+  {
+    World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
+  }
+
+  if (!World) return;
+
+  FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
+
+  FSoulCountDownAction* FoundAction = LatentActionManager.FindExistingAction<FSoulCountDownAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
+
+  if (CountDownInput == ESoulCountDownActionInput::Start)
+  {
+    if (!FoundAction)
+    {
+      LatentActionManager.AddNewAction(
+        LatentInfo.CallbackTarget,
+        LatentInfo.UUID,
+        new FSoulCountDownAction(TotalTime, UpdateInterval, OutRemainingTime, CountDownOutput, LatentInfo)
+      );
+    }
+  }
+
+  if (CountDownInput == ESoulCountDownActionInput::Cancel)
+  {
+    if (FoundAction)
+    {
+      FoundAction->CancelAction();
+    }
+  }
 }
