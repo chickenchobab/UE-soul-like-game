@@ -9,6 +9,7 @@
 class ASoulHeroCharacter;
 class ASoulHeroController;
 class UHeroCombatComponent;
+class UHeroUIComponent;
 
 /**
  * 
@@ -27,6 +28,9 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "SoulAbility")
 	UHeroCombatComponent* GetHeroCombatComponentFromActorInfo();
+
+	UFUNCTION(BlueprintPure, Category = "SoulAbility")
+	UHeroUIComponent* GetHeroUIComponentFromActorInfo();
 
 	UFUNCTION(BlueprintPure, Category = "SoulAbility")
 	FGameplayEffectSpecHandle MakeHeroDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass, float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag, int32 InUsedComboCount);

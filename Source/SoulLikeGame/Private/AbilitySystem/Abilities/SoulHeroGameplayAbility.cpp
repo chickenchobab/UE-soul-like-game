@@ -33,6 +33,12 @@ UHeroCombatComponent* USoulHeroGameplayAbility::GetHeroCombatComponentFromActorI
 }
 
 
+UHeroUIComponent* USoulHeroGameplayAbility::GetHeroUIComponentFromActorInfo()
+{
+  return GetHeroCharacterFromActorInfo()->GetHeroUIComponent();
+}
+
+
 FGameplayEffectSpecHandle USoulHeroGameplayAbility::MakeHeroDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass, float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag, int32 InUsedComboCount)
 {
   check(EffectClass);
