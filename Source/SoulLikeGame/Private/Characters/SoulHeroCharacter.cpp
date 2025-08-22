@@ -78,6 +78,8 @@ void ASoulHeroCharacter::SetupPlayerInputComponent(class UInputComponent* Player
   SoulInputComponent->BindNativeInputAction(InputConfigDataAsset, SoulGameplayTags::InputTag_SwitchTarget, ETriggerEvent::Triggered, this, &ThisClass::Input_SwitchTargetTriggered);
   SoulInputComponent->BindNativeInputAction(InputConfigDataAsset, SoulGameplayTags::InputTag_SwitchTarget, ETriggerEvent::Completed, this, &ThisClass::Input_SwitchTargetCompleted);
 
+  SoulInputComponent->BindNativeInputAction(InputConfigDataAsset, SoulGameplayTags::InputTag_PickUp_Stones, ETriggerEvent::Started, this, &ThisClass::Input_PickStonesStarted);
+
   SoulInputComponent->BindAbilityInputAction(InputConfigDataAsset, this, &ThisClass::Input_AbilityInputPressed, &ThisClass::Input_AbilityInputReleased);
 }
 
@@ -141,6 +143,18 @@ void ASoulHeroCharacter::Input_SwitchTargetCompleted(const FInputActionValue& In
   );
 
   Debug::Print(TEXT("SwitchDirection: ") + SwitchDirection.ToString());
+}
+
+
+void ASoulHeroCharacter::Input_PickStonesStarted(const FInputActionValue& InputActionValue)
+{
+  FGameplayEventData Data;
+
+  UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+    this,
+    SoulGameplayTags::Player_Event_ConsumeStones,
+    Data
+  );
 }
 
 
