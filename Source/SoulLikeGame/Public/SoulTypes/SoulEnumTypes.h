@@ -35,3 +35,12 @@ enum class ESoulCountDownActionOutput : uint8
   Completed,
   Cancelled
 };
+
+UENUM(BlueprintType)
+enum class ESoulGameDifficulty : uint8
+{
+  Easy,
+  Normal,
+  Hard,
+  VeryHard
+};

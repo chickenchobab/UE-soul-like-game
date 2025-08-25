@@ -11,6 +11,7 @@
 #include "Widgets/SoulWidgetBase.h"
 #include "Components/BoxComponent.h"
 #include "SoulFunctionLibrary.h"
+#include "GameModes/SoulBaseGameMode.h"
 
 #include "SoulDebugHelper.h"
 
@@ -109,14 +110,37 @@ void ASoulEnemyCharacter::InitEnemyStartUpData()
 {
   if (CharacterStartUpData.IsNull()) return;
 
+  int32 AbilityApplyLevel = 1;
+
+  if (ASoulBaseGameMode* BaseGameMode = GetWorld()->GetAuthGameMode<ASoulBaseGameMode>())
+  {
+    switch (BaseGameMode->GetCurrentGameDifficulty())
+    {
+      case ESoulGameDifficulty::Easy:
+        AbilityApplyLevel = 1;
+        break;
+      case ESoulGameDifficulty::Normal:
+        AbilityApplyLevel = 2;
+        break;
+      case ESoulGameDifficulty::Hard:
+        AbilityApplyLevel = 3;
+        break;
+      case ESoulGameDifficulty::VeryHard:
+        AbilityApplyLevel = 4;
+        break;
+      default:
+        break;
+    }
+  }
+
   UAssetManager::GetStreamableManager().RequestAsyncLoad(
     CharacterStartUpData.ToSoftObjectPath(),
     FStreamableDelegate::CreateLambda(
-      [this]()
+      [this, AbilityApplyLevel]()
       {
         if (UDataAsset_StartUpDataBase* LoadedData = CharacterStartUpData.Get())
         {
-          LoadedData->GiveToAbilitySystemComponent(SoulAbilitySystemComponent);
+          LoadedData->GiveToAbilitySystemComponent(SoulAbilitySystemComponent, AbilityApplyLevel);
         }
       }
     )

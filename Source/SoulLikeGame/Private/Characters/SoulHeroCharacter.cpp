@@ -15,6 +15,7 @@
 #include "Components/Combat/HeroCombatComponent.h"
 #include "Components/UI/HeroUIComponent.h"
 #include "AbilitySystemBlueprintLibrary.h"
+#include "GameModes/SoulBaseGameMode.h"
 
 #include "SoulDebugHelper.h"
 
@@ -98,7 +99,30 @@ void ASoulHeroCharacter::PossessedBy(AController* NewController)
   {
     if (UDataAsset_StartUpDataBase* LoadedData = CharacterStartUpData.LoadSynchronous())
     {
-      LoadedData->GiveToAbilitySystemComponent(SoulAbilitySystemComponent);
+      int32 AbilityApplyLevel = 1;
+
+      if (ASoulBaseGameMode* BaseGameMode = GetWorld()->GetAuthGameMode<ASoulBaseGameMode>())
+      {
+        switch (BaseGameMode->GetCurrentGameDifficulty())
+        {
+          case ESoulGameDifficulty::Easy:
+            AbilityApplyLevel = 4;
+            break;
+          case ESoulGameDifficulty::Normal:
+            AbilityApplyLevel = 3;
+            break;
+          case ESoulGameDifficulty::Hard:
+            AbilityApplyLevel = 2;
+            break;
+          case ESoulGameDifficulty::VeryHard:
+            AbilityApplyLevel = 1;
+            break;
+          default:
+            break;
+        }
+      }
+
+      LoadedData->GiveToAbilitySystemComponent(SoulAbilitySystemComponent, AbilityApplyLevel);
     }
   }
 }

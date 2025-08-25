@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "SoulTypes/SoulEnumTypes.h"
 #include "SoulBaseGameMode.generated.h"
 
 /**
@@ -16,4 +17,11 @@ class SOULLIKEGAME_API ASoulBaseGameMode : public AGameModeBase
 	
 public:
 	ASoulBaseGameMode();
+
+protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Game Settings")
+	ESoulGameDifficulty CurrentGameDifficulty = ESoulGameDifficulty::Easy;
+
+public:
+	FORCEINLINE ESoulGameDifficulty GetCurrentGameDifficulty() const { return CurrentGameDifficulty; }
 };
