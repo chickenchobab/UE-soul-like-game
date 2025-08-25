@@ -3,3 +3,8 @@
 
 #include "GameModes/SoulBaseGameMode.h"
 
+ASoulBaseGameMode::ASoulBaseGameMode()
+{
+	PrimaryActorTick.bCanEverTick = true;
+  PrimaryActorTick.bStartWithTickEnabled = true;
+}

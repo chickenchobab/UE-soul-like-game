@@ -14,4 +14,6 @@ class SOULLIKEGAME_API ASoulBaseGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 	
+public:
+	ASoulBaseGameMode();
 };
