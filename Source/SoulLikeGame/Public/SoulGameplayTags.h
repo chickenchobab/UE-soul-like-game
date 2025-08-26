@@ -101,4 +101,6 @@ namespace SoulGameplayTags
 	/** Game data tags */
 	SOULLIKEGAME_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameData_Level_SurvivalGameModeMap)
 	SOULLIKEGAME_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameData_Level_MainMenuMap)
+
+	SOULLIKEGAME_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameData_SaveGame_Slot_1)
 }

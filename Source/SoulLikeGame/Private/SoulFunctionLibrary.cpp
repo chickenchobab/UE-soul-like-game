@@ -10,6 +10,8 @@
 #include "SoulGameplayTags.h"
 #include "SoulTypes/SoulCountDownAction.h"
 #include "SoulGameInstance.h"
+#include "Kismet/GameplayStatics.h"
+#include "SoulSaveGame.h"
 
 #include "SoulDebugHelper.h"
 
@@ -242,4 +244,32 @@ void USoulFunctionLibrary::ToggleInputMode(const UObject* WorldContextObject, ES
   default:
     break;
   }
+}
+
+void USoulFunctionLibrary::SaveCurrentGameDifficulty(ESoulGameDifficulty InDifficultyToSave)
+{
+	USaveGame* SaveGameObject = UGameplayStatics::CreateSaveGameObject(USoulSaveGame::StaticClass());
+
+  if (USoulSaveGame* SoulSaveGameObject = Cast<USoulSaveGame>(SaveGameObject))
+  {
+    SoulSaveGameObject->SavedCurrentGameDifficulty = InDifficultyToSave;
+
+    const bool bWasSaved = UGameplayStatics::SaveGameToSlot(SoulSaveGameObject, SoulGameplayTags::GameData_SaveGame_Slot_1.GetTag().ToString(), 0);
+  }
+}
+
+bool USoulFunctionLibrary::TryLoadSavedGameDifficulty(ESoulGameDifficulty& OutSavedDifficulty)
+{
+	if (UGameplayStatics::DoesSaveGameExist(SoulGameplayTags::GameData_SaveGame_Slot_1.GetTag().ToString(), 0))
+  {
+    USaveGame* SaveGameObject = UGameplayStatics::LoadGameFromSlot(SoulGameplayTags::GameData_SaveGame_Slot_1.GetTag().ToString(), 0);
+
+    if (USoulSaveGame* SoulSaveGameObject = Cast<USoulSaveGame>(SaveGameObject))
+    {
+      OutSavedDifficulty = SoulSaveGameObject->SavedCurrentGameDifficulty;
+      return true;
+    }
+  }
+  
+  return false;
 }

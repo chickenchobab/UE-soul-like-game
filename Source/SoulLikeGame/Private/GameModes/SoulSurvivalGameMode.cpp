@@ -7,8 +7,23 @@
 #include "Kismet/GameplayStatics.h"
 #include "Engine/TargetPoint.h"
 #include "NavigationSystem.h"
+#include "SoulFunctionLibrary.h"
 
 #include "SoulDebugHelper.h"
+
+
+void ASoulSurvivalGameMode::InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage)
+{
+  Super::InitGame(MapName, Options, ErrorMessage);
+
+  ESoulGameDifficulty SavedGameDifficulty;
+
+  if (USoulFunctionLibrary::TryLoadSavedGameDifficulty(SavedGameDifficulty))
+  {
+    CurrentGameDifficulty = SavedGameDifficulty;
+  }
+}
+
 
 void ASoulSurvivalGameMode::BeginPlay()
 {

@@ -66,4 +66,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "FunctionLibrary", meta = (WorldContext = "WorldContextObject"))
 	static void ToggleInputMode(const UObject* WorldContextObject, ESoulInputMode InInputMode);
+
+	UFUNCTION(BlueprintCallable, Category = "FunctionLibrary")
+	static void SaveCurrentGameDifficulty(ESoulGameDifficulty InDifficultyToSave);
+
+	UFUNCTION(BlueprintCallable, Category = "FunctionLibrary")
+	static bool TryLoadSavedGameDifficulty(ESoulGameDifficulty& OutSavedDifficulty);
 };

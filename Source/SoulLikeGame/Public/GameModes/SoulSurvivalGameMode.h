@@ -57,6 +57,10 @@ class SOULLIKEGAME_API ASoulSurvivalGameMode : public ASoulBaseGameMode
 	GENERATED_BODY()
 	
 protected:
+	//~ Begin AGameModeBase Interface
+	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage);
+	//~ End AGameModeBase Interface
+	
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
