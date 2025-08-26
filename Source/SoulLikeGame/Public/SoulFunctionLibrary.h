@@ -10,6 +10,7 @@
 class USoulAbilitySystemComponent;
 class UPawnCombatComponent;
 struct FScalableFloat;
+class USoulGameInstance;
 
 /**
  * 
@@ -54,10 +55,15 @@ public:
 	static bool ApplyGameplayEffectSpecHandleToTargetActor(AActor* InInstigator, AActor* InTargetActor, const FGameplayEffectSpecHandle& InSpecHandle);
 
 	UFUNCTION(BlueprintCallable, Category = "FunctionLibrary", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", ExpandEnumAsExecs = "CountDownInput|CountDownOutput", TotalTime = "1.0", UpdateInterval = "0.1"))
-	static void CountDown
-	(	const UObject* WorldContextObject, 
+	static void CountDown(const UObject* WorldContextObject, 
 		float TotalTime, float UpdateInterval, float& OutRemainingTime, 
 		ESoulCountDownActionInput CountDownInput, UPARAM(DisplayName = "Output") ESoulCountDownActionOutput& CountDownOutput,
 		FLatentActionInfo LatentInfo
 	);
+
+	UFUNCTION(BlueprintPure, Category = "FunctionLibrary", meta = (WorldContext = "WorldContextObject"))
+	static USoulGameInstance* GetSoulGameInstance(const UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, Category = "FunctionLibrary", meta = (WorldContext = "WorldContextObject"))
+	static void ToggleInputMode(const UObject* WorldContextObject, ESoulInputMode InInputMode);
 };

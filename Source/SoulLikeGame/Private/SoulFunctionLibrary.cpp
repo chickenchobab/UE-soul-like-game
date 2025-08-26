@@ -9,6 +9,8 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "SoulGameplayTags.h"
 #include "SoulTypes/SoulCountDownAction.h"
+#include "SoulGameInstance.h"
+
 #include "SoulDebugHelper.h"
 
 USoulAbilitySystemComponent* USoulFunctionLibrary::NativeGetSoulASCFromActor(AActor* InActor)
@@ -153,8 +155,7 @@ bool USoulFunctionLibrary::ApplyGameplayEffectSpecHandleToTargetActor(AActor* In
 }
 
 
-void USoulFunctionLibrary::CountDown
-( const UObject* WorldContextObject, float TotalTime, float UpdateInterval, float& OutRemainingTime, 
+void USoulFunctionLibrary::CountDown(const UObject* WorldContextObject, float TotalTime, float UpdateInterval, float& OutRemainingTime, 
   ESoulCountDownActionInput CountDownInput, UPARAM(DisplayName = "Output") ESoulCountDownActionOutput& CountDownOutput,
   FLatentActionInfo LatentInfo
 )
@@ -190,5 +191,55 @@ void USoulFunctionLibrary::CountDown
     {
       FoundAction->CancelAction();
     }
+  }
+}
+
+
+USoulGameInstance* USoulFunctionLibrary::GetSoulGameInstance(const UObject* WorldContextObject)
+{
+  if (GEngine)
+  {
+    if (UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
+    {
+      return World->GetGameInstance<USoulGameInstance>();
+    }
+  }
+
+  return nullptr;
+}
+
+
+void USoulFunctionLibrary::ToggleInputMode(const UObject* WorldContextObject, ESoulInputMode InInputMode)
+{
+  APlayerController* PlayerController = nullptr;
+
+  if (GEngine)
+  {
+    if (UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
+    {
+      PlayerController = World->GetFirstPlayerController();
+    }
+  }
+
+  if (!PlayerController) 
+  {
+    return;
+  }
+
+  FInputModeGameOnly GameOnlyMode;
+  FInputModeUIOnly UIOnlyMode;
+
+  switch (InInputMode)
+  {
+  case ESoulInputMode::GameOnly:
+    PlayerController->SetInputMode(GameOnlyMode);
+    PlayerController->bShowMouseCursor = false;
+    break;
+  case ESoulInputMode::UIOnly:
+    PlayerController->SetInputMode(UIOnlyMode);
+    PlayerController->bShowMouseCursor = true;
+    break;
+  default:
+    break;
   }
 }
